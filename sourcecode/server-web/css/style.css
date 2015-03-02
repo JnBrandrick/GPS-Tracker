@@ -1,3 +1,15 @@
+/** Fonts **/
+@font-face {
+    font-family: Nav;
+    src: url(AlpacaScarlett.ttf);
+}
+
+@font-face {
+    font-family: Table;
+    src: url(ClementePDai-Regular.ttf);
+}
+
+
 html
 {
 	background: #FFFFFF;
@@ -16,6 +28,7 @@ body
 	padding: 0;
 	width: 100%;
 	height: 100%;
+	background: #1a425b;
 }
 
 
@@ -24,10 +37,127 @@ body
 {
     width: 100%;
     height: 100%;
+
 }
 
 #mapContainer
 {
-    width: 100%;
-    height: 100%;
+	margin-top: 20px;
+    width: 80%;
+    height: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Navigational Bar */
+#navbar
+{
+	width: 100%;
+	height: 60px;
+	z-index: 1;
+	background: #0E4F64;
+	border-bottom: 2px solid #5ab0cc;
+	position: absoloute:
+	bottom: -1px;
+	box-shadow: 2px -20px 100px 10px #000;
+}
+
+#nav
+{
+	height: 100%;
+	text-align: center;
+	margin: 0 auto;
+}
+
+#nav > div
+{
+	height: 100%;
+	margin: 10px 10px;
+	display: inline-block;
+}
+
+#nav div a 
+{
+	font-family: Nav, sans-serif, arial;
+	font-size: 3em;
+	font-weight: 4;
+	color:#80b8bf;
+	transition: color 0.50s;
+	text-decoration: none;
+}
+
+#nav div a:hover
+{
+	color:#FFF;
+}
+
+
+/** Table Styling **/
+table 
+{
+	font-family: Table, sans-serif, arial;
+	margin-top: 50px;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	background: #C3CB71;
+
+}
+
+td, th
+{
+ 	font-size: 1.5em;
+    border: 1px solid #5ab0cc;
+    padding: 3px 7px 2px 7px;
+    background: #0e4f64;
+}
+
+th
+{
+	font-size: 2em;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 4px;
+    background-color: #08304b;
+    color: #FFF;
+}
+
+td
+{
+	color: #FFF;
+	font-family: sans-serif, arial;
+}
+
+
+body h1
+{
+	text-align: center;
+	font-size: 2em;
+	font-family: Table, sans-serif, arial;
+	color: #FFF;
+	padding: 0px;
+	text-shadow: 5px 5px 3px  #000;
+}
+
+body #content
+{
+	text-align: center;
+	font-size: 1.5em;
+	font-family: sans-serif, arial;
+	color: #80b8bf;
+	padding: 0px;
+}
+
+/** Footer Styling **/
+.footer
+{
+	width: 100%;
+	background-color: #08304b;
+	text-align: center;
+	position: absolute;
+	padding: 0px;
+	margin: 0px;
+	bottom: 0px;
+	font-family: sans-serif, arial;
+	color: #AAA;
 }
