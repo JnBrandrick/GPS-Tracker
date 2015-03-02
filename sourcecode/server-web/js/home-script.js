@@ -84,8 +84,12 @@ function loadData()
         //fetch the time
         var time = users[i].getElementsByTagName("time")[0].childNodes[0].nodeValue;
 
+        //fetch the IP address
+        var ip = users[i].getElementsByTagName("ip")[0].childNodes[0].nodeValue;
+
+
         //add the information to the map
-        addToTable(name, time, latitude, longitude);
+        addToTable(name, ip, time, latitude, longitude);
 	}
 
 	//set the timer for the next update to refresh data
@@ -93,10 +97,10 @@ function loadData()
 
 }
 
-function addToTable(name, time, latitude, longitude)
+function addToTable(name, ip, time, latitude, longitude)
 {
 	//add the user to the table
-	$('#users > tbody:last').append('<tr><td>' + name + '</td><td>' + time + '</td><td>' 
+	$('#users > tbody:last').append('<tr><td>' + name + '</td><td>'+ ip + '</td><td>'+ time + '</td><td>' 
 		+ latitude + '</td><td>' + longitude + '</td></tr>');
 
 }

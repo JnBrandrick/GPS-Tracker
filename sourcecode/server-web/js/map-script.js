@@ -497,8 +497,11 @@ function loadData()
         //fetch the time
         var time = users[i].getElementsByTagName("time")[0].childNodes[0].nodeValue;
 
+        //fetch the IP address
+        var ip = users[i].getElementsByTagName("ip")[0].childNodes[0].nodeValue;
+
         //add the information to the map
-        addMarker(name, time, latitude, longitude);
+        addMarker(name, ip, time, latitude, longitude);
 	}
 
 	//set the timer for the next update to refresh data
@@ -506,7 +509,7 @@ function loadData()
 
 }
 
-function addMarker(name, time, latitude, longitude)
+function addMarker(name, ip, time, latitude, longitude)
 {
 	//create the latLng object
 	var location = new google.maps.LatLng(parseFloat(latitude), parseFloat(longitude));
@@ -515,7 +518,7 @@ function addMarker(name, time, latitude, longitude)
     var marker = new google.maps.Marker({ position: location, map: map, title: String(name)});
 
     //TO-DO: add info window on click 
-	//var infowindow = new google.maps.InfoWindow({map: map, position: location, content: name + "\n" + time });
+	//var infowindow = new google.maps.InfoWindow({map: map, position: location, content: name + "\n" + time + ip });
 
 	//add the marker to the array
 	markers.push(marker);
