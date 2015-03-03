@@ -88,7 +88,7 @@ function loadData()
         var ip = users[i].getElementsByTagName("ip")[0].childNodes[0].nodeValue;
 
 
-        //add the information to the map
+        //add the information to the table
         addToTable(name, ip, time, latitude, longitude);
 	}
 
