@@ -1,5 +1,13 @@
 package comteam_chimeragps_tracker.httpsgithub.bigbrother;
+/*
+        Date:       March 4, 2014
+        Designer:   Jeff Bayntun
+        Programmer:  Jeff Bayntun
 
+        Description: This Static class handles the interaction with the Android
+        Shared Preferences, which is used as a blue colored database.
+
+ */
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -18,8 +26,8 @@ public class PreferenceHandler {
        String[] p = new String[3];
        SharedPreferences sharedpreferences = c.getSharedPreferences(PreferenceName, Context.MODE_WORLD_READABLE);
        p[0] = sharedpreferences.getString(HOST, "");
-       p[0] = sharedpreferences.getString(PORT, "");
-       p[0] = sharedpreferences.getString(USER, "");
+       p[1] = sharedpreferences.getString(PORT, "");
+       p[2] = sharedpreferences.getString(USER, "");
        
        return p;
    }
@@ -32,5 +40,18 @@ public class PreferenceHandler {
         editor.putString(PORT, port);
         editor.putString(USER, user);
         editor.commit();
+    }
+
+    static String getPreference(Context c, String key)
+    {
+        SharedPreferences sharedpreferences = c.getSharedPreferences(PreferenceName, Context.MODE_WORLD_READABLE);
+        return sharedpreferences.getString(key, "");
+    }
+
+    static void setPreference(Context c, String key, String value)
+    {
+        SharedPreferences sharedpreferences = c.getSharedPreferences(PreferenceName, Context.MODE_WORLD_READABLE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(key, value);
     }
 }

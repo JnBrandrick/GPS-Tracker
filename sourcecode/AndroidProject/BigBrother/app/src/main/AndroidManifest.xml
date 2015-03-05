@@ -2,11 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="comteam_chimeragps_tracker.httpsgithub.bigbrother" >
 
+    <!-- Permissions used -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+
+
         <activity
             android:name=".AcquireHost"
             android:label="@string/app_name" >
@@ -15,6 +21,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".TrackingCentral"
+            android:label="@string/title_activity_tracking_central" >
+        </activity>
+        <activity
+            android:name=".ShowMap"
+            android:label="@string/title_activity_show_map" >
         </activity>
     </application>
 

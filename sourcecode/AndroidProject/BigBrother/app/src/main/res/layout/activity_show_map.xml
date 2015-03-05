@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/MainBackground"
+    android:weightSum="10"
+    android:orientation="vertical"
+    tools:context="comteam_chimeragps_tracker.httpsgithub.bigbrother.ShowMap">
+
+    <WebView
+        android:id="@+id/webView"
+        android:scrollbars="none"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="View Other"
+            android:background="@color/GoodSubmit"
+            android:id="@+id/switchMap"
+            android:layout_marginBottom="10dp"
+            android:onClick="switchMap"
+            android:layout_marginRight="2dp"
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Main Menu"
+            android:background="@color/GoodSubmit"
+            android:id="@+id/openTracking"
+            android:layout_marginBottom="10dp"
+            android:onClick="openTracking"
+            android:layout_marginLeft="2dp"
+            />
+
+        </LinearLayout>
+
+
+
+</LinearLayout>

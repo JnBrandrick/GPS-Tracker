@@ -1,7 +1,21 @@
 package comteam_chimeragps_tracker.httpsgithub.bigbrother;
+/*
+        Date:       March 4, 2014
+        Activity:   AcquireHost
+        Designer:   Jeff Bayntun
+        Programmer:  Jeff Bayntun
 
+        Description: This Activity allows the user to input host information.
+        When the user submits this information, a connection is attempted.  If
+        the connection succeeds, the user proceeds to the Activity Tracking Central.
+
+ */
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +25,19 @@ import android.widget.Toast;
 
 public class AcquireHost extends ActionBarActivity {
 
+    private final TextWatcher  mTextEditorWatcher = new TextWatcher() {
+
+        public void beforeTextChanged(CharSequence s, int start, int count, int after)
+        {}
+
+        public void onTextChanged(CharSequence s, int start, int before, int count)
+        {}
+
+        public void afterTextChanged(Editable s)
+        {
+            allFields();
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,10 +55,13 @@ public class AcquireHost extends ActionBarActivity {
             for(int i = 0; i < 3; i++)
             {
                 views[i].setText(pref[i]);
+                views[i].setSelection(views[i].getText().length());
+                views[i].addTextChangedListener(mTextEditorWatcher);
             }
         }
 
-        setFocusListeners(views);
+        allFields();
+
 
     }
 
@@ -58,12 +88,30 @@ public class AcquireHost extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void clearFields(View view)
+    {
+        EditText[] views = new EditText[3];
+        views[0] = (EditText)findViewById(R.id.hostEdit);
+        views[1] = (EditText)findViewById(R.id.portEdit);
+        views[2] = (EditText)findViewById(R.id.userEdit);
+
+        for(int i = 0; i < 3; i++)
+        {
+            views[i].setText("");
+        }
+    }
+
     public void submitConnection(View view)
     {
         String user, host, port;
         boolean connected = false;
-        Toast.makeText(getApplicationContext(), "Dingle",
-                Toast.LENGTH_LONG).show();
+
+        if(!allFields())
+        {
+            Toast.makeText(getApplicationContext(), "You must fill in all values to proceed.",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
 
         // get username, host and port
         EditText h = (EditText)findViewById(R.id.hostEdit);
@@ -89,49 +137,30 @@ public class AcquireHost extends ActionBarActivity {
         }
 
         //open other view
-        Toast.makeText(getApplicationContext(), "Go to new activity here",
-                Toast.LENGTH_LONG).show();
-
-
+        Intent myIntent = new Intent(this, TrackingCentral.class);
+        startActivity(myIntent);
     }
 
-    void setFocusListeners(EditText[] views)
+    boolean allFields()
     {
-        for(EditText e: views)
+        Button submit = (Button) findViewById(R.id.submit);
+        EditText h = (EditText)findViewById(R.id.hostEdit);
+        EditText p = (EditText)findViewById(R.id.portEdit);
+        EditText u = (EditText)findViewById(R.id.userEdit);
+
+        if (h.getText().toString().trim().length() > 0
+                && p.getText().toString().trim().length() > 0
+                && u.getText().toString().trim().length() > 0)
         {
-            e.setOnFocusChangeListener(new View.OnFocusChangeListener()
-            {
-
-                @Override
-                public void onFocusChange(View v, boolean hasFocus)
-                {
-
-                    if (hasFocus)
-                    {
-                        return;
-                    }
-
-                    Button submit = (Button) findViewById(R.id.submit);
-                    EditText h = (EditText)findViewById(R.id.hostEdit);
-                    EditText p = (EditText)findViewById(R.id.portEdit);
-                    EditText u = (EditText)findViewById(R.id.userEdit);
-
-                    if (h.getText().toString().trim().length() > 0
-                            && p.getText().toString().trim().length() > 0
-                            && u.getText().toString().trim().length() > 0)
-                    {
-                        //enable submit button, set color green
-                        submit.setEnabled(true);
-                        submit.setBackgroundColor(getResources().getColor(R.color.Chartreuse));
-                    }
-                    else
-                    {
-                        // disable submit, set color red
-                        submit.setEnabled(false);
-                        submit.setBackgroundColor(getResources().getColor(R.color.win8_red));
-                    }
-                }
-            });
+            //set color green
+            submit.setBackgroundColor(getResources().getColor(R.color.GoodSubmit));
+            return true;
+        }
+        else
+        {
+            // set color red
+            submit.setBackgroundColor(getResources().getColor(R.color.BadSubmit));
+            return false;
         }
     }
 }
