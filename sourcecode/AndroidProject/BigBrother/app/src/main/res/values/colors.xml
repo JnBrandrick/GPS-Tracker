@@ -4,6 +4,13 @@ Version: 2
 Organized by: Willie Tsang
 -->
 <resources>
+    <!-- Chimera Project -->
+    <color name="GoodSubmit">#7FFF00</color>
+    <color name="BadSubmit">#E51400</color>
+    <color name="MainBackground">#008B8B</color>
+    <color name="Titles">#DA70D6</color>
+    <color name="TextEdit">#AFEEEE</color>
+
     <!-- Android style -->
     <color name="android_green">#A4C639</color>
     <!-- Android Holo style -->
