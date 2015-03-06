@@ -43,16 +43,23 @@ public class AcquireHost extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acquire_host);
 
+        // already connected to a host and tracking, open that activity
+        if(PreferenceHandler.getPreference(this, PreferenceHandler.TRACKING_PREFERENCE).equals("true"))
+        {
+            Intent myIntent = new Intent(this, TrackingCentral.class);
+            startActivity(myIntent);
+            finish();
+        }
+
         String[] pref = PreferenceHandler.checkPreferences(this);
 
-        EditText[] views = new EditText[3];
+        EditText[] views = new EditText[2];
         views[0] = (EditText)findViewById(R.id.hostEdit);
         views[1] = (EditText)findViewById(R.id.portEdit);
-        views[2] = (EditText)findViewById(R.id.userEdit);
 
 
-        if(pref.length == 3) {
-            for(int i = 0; i < 3; i++)
+        if(pref.length == 2) {
+            for(int i = 0; i < 2; i++)
             {
                 views[i].setText(pref[i]);
                 views[i].setSelection(views[i].getText().length());
@@ -90,12 +97,11 @@ public class AcquireHost extends ActionBarActivity {
 
     public void clearFields(View view)
     {
-        EditText[] views = new EditText[3];
+        EditText[] views = new EditText[2];
         views[0] = (EditText)findViewById(R.id.hostEdit);
         views[1] = (EditText)findViewById(R.id.portEdit);
-        views[2] = (EditText)findViewById(R.id.userEdit);
 
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < 2; i++)
         {
             views[i].setText("");
         }
@@ -103,27 +109,24 @@ public class AcquireHost extends ActionBarActivity {
 
     public void submitConnection(View view)
     {
-        String user, host, port;
+        String host, port;
         boolean connected = false;
 
         if(!allFields())
         {
-            Toast.makeText(getApplicationContext(), "You must fill in all values to proceed.",
-                    Toast.LENGTH_LONG).show();
+            Helpers.makeToast(this, "Must specify a host and port!", Toast.LENGTH_LONG);
             return;
         }
 
         // get username, host and port
         EditText h = (EditText)findViewById(R.id.hostEdit);
         EditText p = (EditText)findViewById(R.id.portEdit);
-        EditText u = (EditText)findViewById(R.id.userEdit);
 
-        user = u.getText().toString();
         host = h.getText().toString();
         port = p.getText().toString();
 
         // add it to shared preferences
-        PreferenceHandler.addPreferences(this, host, port, user);
+        PreferenceHandler.addPreferences(this, host, port);
 
         //try to connect
         connected = true;
@@ -131,14 +134,14 @@ public class AcquireHost extends ActionBarActivity {
         if(!connected)
         {
             // do a message box
-            Toast.makeText(getApplicationContext(), "Error Connecting, verify host information",
-                    Toast.LENGTH_LONG).show();
+            Helpers.makeToast(this, "Error Connecting, verify host information", Toast.LENGTH_LONG);
             return;
         }
 
         //open other view
         Intent myIntent = new Intent(this, TrackingCentral.class);
         startActivity(myIntent);
+        finish();
     }
 
     boolean allFields()
@@ -146,11 +149,9 @@ public class AcquireHost extends ActionBarActivity {
         Button submit = (Button) findViewById(R.id.submit);
         EditText h = (EditText)findViewById(R.id.hostEdit);
         EditText p = (EditText)findViewById(R.id.portEdit);
-        EditText u = (EditText)findViewById(R.id.userEdit);
 
         if (h.getText().toString().trim().length() > 0
-                && p.getText().toString().trim().length() > 0
-                && u.getText().toString().trim().length() > 0)
+                && p.getText().toString().trim().length() > 0)
         {
             //set color green
             submit.setBackgroundColor(getResources().getColor(R.color.GoodSubmit));

@@ -12,17 +12,19 @@ package comteam_chimeragps_tracker.httpsgithub.bigbrother;
  */
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.Button;
 
 
 public class TrackingCentral extends ActionBarActivity {
 
-    static boolean tracking;
+    boolean tracking;
+    private final String START_TRACKING = "Start Tracking";
+    private final String STOP_TRACKING = "Stop Tracking";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,11 @@ public class TrackingCentral extends ActionBarActivity {
 
         // need to check if tracking or not so toggle tracking button can be done
         // might want to do that in AcquireHost to see what app to load...
+        tracking = (PreferenceHandler.getPreference(this, PreferenceHandler.TRACKING_PREFERENCE).equals("true"));
+
+        Button toggle = (Button)findViewById(R.id.toggleTracking);
+        String t = (tracking) ? STOP_TRACKING:START_TRACKING;
+        toggle.setText(t);
     }
 
 
@@ -57,20 +64,39 @@ public class TrackingCentral extends ActionBarActivity {
 
     public void toggleTracking(View view)
     {
-        Toast.makeText(getApplicationContext(), "Toggle button pressed.",
-                Toast.LENGTH_LONG).show();
-        //see if currently tracking
-
         // start or stop tracking
+        if(tracking)
+        {
+            //stop service
+            Intent i= new Intent(this, TrackingService.class);
+            stopService(i);
+            PreferenceHandler.setPreference(this, PreferenceHandler.TRACKING_PREFERENCE, "false");
+        }
+        else
+        {
+            //start service
+            Intent i= new Intent(this, TrackingService.class);
+            PreferenceHandler.setPreference(this, PreferenceHandler.TRACKING_PREFERENCE, "true");
+            startService(i);
+        }
 
         // update button
+        tracking = !tracking;
+        Button toggle = (Button)findViewById(R.id.toggleTracking);
+        String t = (tracking) ? STOP_TRACKING:START_TRACKING;
+        toggle.setText(t);
     }
 
     public void changeServer(View view)
     {
         // go back to AcquireHost activity
+        Intent i= new Intent(this, TrackingService.class);
+        stopService(i);
+        PreferenceHandler.setPreference(this, PreferenceHandler.TRACKING_PREFERENCE, "false");
+
         Intent myIntent = new Intent(this,AcquireHost.class);
         startActivity(myIntent);
+        finish();
     }
 
     public void showMine(View view)
