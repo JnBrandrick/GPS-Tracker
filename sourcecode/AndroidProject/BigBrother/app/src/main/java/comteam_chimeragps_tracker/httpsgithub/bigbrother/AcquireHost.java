@@ -11,7 +11,9 @@ package comteam_chimeragps_tracker.httpsgithub.bigbrother;
 
  */
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -23,7 +25,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 public class AcquireHost extends ActionBarActivity {
+    private ClientConnect clientNet;
 
     private final TextWatcher  mTextEditorWatcher = new TextWatcher() {
 
@@ -129,14 +139,20 @@ public class AcquireHost extends ActionBarActivity {
         PreferenceHandler.addPreferences(this, host, port);
 
         //try to connect
-        connected = true;
-        //display error if any
-        if(!connected)
+        //connected = true;
+        
+        if(!foundServer())
         {
-            // do a message box
-            Helpers.makeToast(this, "Error Connecting, verify host information", Toast.LENGTH_LONG);
             return;
         }
+        
+        //display error if any
+        //if(!connected)
+        //{
+            // do a message box
+        //    Helpers.makeToast(this, "Error Connecting, verify host information", Toast.LENGTH_LONG);
+        //    return;
+        //}
 
         //open other view
         Intent myIntent = new Intent(this, TrackingCentral.class);
@@ -162,6 +178,71 @@ public class AcquireHost extends ActionBarActivity {
             // set color red
             submit.setBackgroundColor(getResources().getColor(R.color.BadSubmit));
             return false;
+        }
+    }
+    
+    public boolean foundServer()
+    {
+        try
+        {
+            String result = new AsyncLookup().execute(this).get(500, TimeUnit.MILLISECONDS);
+            
+            return result.equals("");
+        }
+        catch(CancellationException e)
+        {
+            // Task was cancelled
+            return false;
+        }
+        catch(ExecutionException e)
+        {
+            // Exception was thrown inside task
+            return false;
+        }
+        catch(InterruptedException e)
+        {
+            // Waiting thread has interrupted the task
+            return false;
+        }
+        catch(TimeoutException e)
+        {
+            // Timeout has expired
+            return false;
+        }
+    }
+    
+    private class AsyncLookup extends AsyncTask<Context, Void, String>
+    {
+
+        @Override
+        protected String doInBackground(Context... params) {
+            try
+            {
+                clientNet = new ClientConnect(params[0]);
+            }
+            catch(SocketException e)
+            {
+                return "Error Connecting, could not connect to socket";
+            }
+            catch(UnknownHostException e)
+            {
+                return "Error Connecting, could not resolve host name";
+            }
+            catch(NumberFormatException e)
+            {
+                return "Port must be a number";
+            }
+            
+            return "";
+        }
+        
+        @Override
+        protected void onPostExecute(String result)
+        {
+            if(!result.equals(""))
+            {
+                Helpers.makeToast(AcquireHost.this, result, Toast.LENGTH_LONG);
+            }
         }
     }
 }

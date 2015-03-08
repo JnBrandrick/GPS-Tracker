@@ -25,7 +25,7 @@ public class ClientConnect implements Runnable {
     private int port;
     private boolean packetSent;
     
-    public ClientConnect(Context appContext) throws SocketException, UnknownHostException
+    public ClientConnect(Context appContext) throws SocketException, UnknownHostException, NumberFormatException
     {
         String[] preferences = PreferenceHandler.checkPreferences(appContext);
         
