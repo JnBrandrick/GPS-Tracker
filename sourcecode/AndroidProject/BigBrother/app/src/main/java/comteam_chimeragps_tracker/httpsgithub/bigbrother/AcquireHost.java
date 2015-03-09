@@ -139,20 +139,11 @@ public class AcquireHost extends ActionBarActivity {
         PreferenceHandler.addPreferences(this, host, port);
 
         //try to connect
-        //connected = true;
         
         if(!foundServer())
         {
             return;
         }
-        
-        //display error if any
-        //if(!connected)
-        //{
-            // do a message box
-        //    Helpers.makeToast(this, "Error Connecting, verify host information", Toast.LENGTH_LONG);
-        //    return;
-        //}
 
         //open other view
         Intent myIntent = new Intent(this, TrackingCentral.class);
