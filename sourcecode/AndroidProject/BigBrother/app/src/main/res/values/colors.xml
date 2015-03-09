@@ -10,6 +10,7 @@ Organized by: Willie Tsang
     <color name="MainBackground">#008B8B</color>
     <color name="Titles">#DA70D6</color>
     <color name="TextEdit">#AFEEEE</color>
+    <color name="Toasts">#FF8C00</color>
 
     <!-- Android style -->
     <color name="android_green">#A4C639</color>
