@@ -10,7 +10,15 @@ package comteam_chimeragps_tracker.httpsgithub.bigbrother;
         activity.
 
  */
+
 import android.content.Context;
+import android.location.Location;
+import android.os.Bundle;
+import android.util.Log;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 /*
         Date:       March 4, 2014
@@ -23,25 +31,50 @@ import android.content.Context;
         activity.
 
  */
-public class LocationHandler {
+public class LocationHandler implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    Context context;
+    GoogleApiClient mGoogleApiClient;
+    Location mLastLocation;
 
     LocationHandler(Context c)
     {
-        context = c;
-        buildGoogleApiClient(context);
+        buildGoogleApiClient(c);
 
     }
 
-    protected synchronized void buildGoogleApiClient(Context context)
+    protected synchronized void buildGoogleApiClient(Context c)
     {
-      /*  GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(context)
-                .addConnectionCallbacks(context)
-                .addOnConnectionFailedListener(context)
+
+        mGoogleApiClient = new GoogleApiClient.Builder(c)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
-                .build(); */
+                .build();
     }
+
+    @Override
+    public void onConnected(Bundle connectionHint)
+    {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            Log.d("Latitude", String.valueOf(mLastLocation.getLatitude()) );
+            Log.d("Longitude", String.valueOf(mLastLocation.getLongitude()) );
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int cause)
+    {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult result)
+    {
+
+    }
+
 
 
 }
