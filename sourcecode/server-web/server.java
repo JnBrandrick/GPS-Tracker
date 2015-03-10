@@ -78,7 +78,7 @@ public class Server extends Thread
                 // Get the client data
                 ClientString = new String (PacketData, 0, dgram.getLength());
                 System.out.println ("Message: "+ ClientString.trim());
-
+                addPoint(ClientString);
             }
     
             catch (SocketTimeoutException s)
@@ -115,6 +115,7 @@ public class Server extends Thread
         }
         catch(Exception e)
         {
+            System.out.println(e);
             die("addPoint failure");
         }
     }
