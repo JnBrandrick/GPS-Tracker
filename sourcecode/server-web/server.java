@@ -120,7 +120,8 @@ public class Server extends Thread
         }
     }
 
-    public String getPoint(String message) 
+    // Requires the format of the input be name|ip|time|lat|lon|
+    public String getPoint(String message)
     {
         String err = "File missing fields";
 
@@ -133,37 +134,39 @@ public class Server extends Thread
         int index = 0;
         int nextIndex = 0;
 
-        nextIndex = getNextDivider(message.toCharArray(), index);
+        char[] msg = message.toCharArray();
+
+        nextIndex = getNextDivider(msg, index);
         if (index < 0) die(err);
         name = message.substring(index, nextIndex - 1);
         index = nextIndex + 1;
 
-        nextIndex = getNextDivider(message.toCharArray(), index);
+        nextIndex = getNextDivider(msg, index);
         if (index < 0) die(err);
         ip = message.substring(index, nextIndex - 1);
         index = nextIndex + 1;
 
-        nextIndex = getNextDivider(message.toCharArray(), index);
+        nextIndex = getNextDivider(msg, index);
         if (index < 0) die(err);
         time = message.substring(index, nextIndex - 1);
         index = nextIndex + 1;
 
-        nextIndex = getNextDivider(message.toCharArray(), index);
+        nextIndex = getNextDivider(msg, index);
         if (index < 0) die(err);
         lat = message.substring(index, nextIndex - 1);
         index = nextIndex + 1;
 
-        nextIndex = getNextDivider(message.toCharArray(), index);
+        nextIndex = getNextDivider(msg, index);
         if (index < 0) die(err);
         lon = message.substring(index, nextIndex - 1);
         index = nextIndex + 1;
 
-        return "    <user>" +
-               "        <name>"      + name + "</name>" +
-               "        <ip>"        + ip   + "</ip>" +
-               "        <time>"      + time + "</time>" +
-               "        <latitude>"  + lat  + "</latitude>" +
-               "        <longitude>" + lon  + "</longitude>" +
+        return "    <user>\n" +
+               "        <name>"      + name + "</name>\n" +
+               "        <ip>"        + ip   + "</ip>\n" +
+               "        <time>"      + time + "</time>\n" +
+               "        <latitude>"  + lat  + "</latitude>\n" +
+               "        <longitude>" + lon  + "</longitude>\n" +
                "    </user>" +
                "</users>";
     }
