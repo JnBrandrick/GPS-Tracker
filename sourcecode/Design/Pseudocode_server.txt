@@ -1,0 +1,32 @@
+
+server class
+{
+    main
+    {
+        get port from command arguments
+        start a server thread
+    }
+
+    run
+    {
+        wait for a packet
+        call add point function with packet data
+    }
+
+    addPoint
+    {
+        find end tag of xml file
+        read everything before that tag into buffer 1
+
+        call get point function and assign result to buffer 2
+
+        append buffer 2 to buffer 1
+        rewrite xml file
+    }
+
+    getPoint
+    {
+        parse string for the 5 data fields
+        return the formatted string for the xml file
+    }
+}
