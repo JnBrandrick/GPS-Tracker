@@ -171,7 +171,21 @@ public class AcquireHost extends ActionBarActivity {
             return false;
         }
     }
-    
+
+    /*
+     * Programmer: Julian Brandrick
+     * Designer: Julian Brandrick
+     *
+     * Function: foundServer (void)
+     * 
+     * Return: boolean
+     *      true  -> Asynchronous task was uninterrupted and the UDP socket was created
+     *      false -> Any exceptions occurred during execution
+     * 
+     * Notes:
+     *  Runs the AsyncLookup class and gets the output of its doInBackground method. If the task
+     *  was successful, the returned String will be empty. Else it will contain an error phrase.
+     */
     public boolean foundServer()
     {
         try
@@ -201,7 +215,16 @@ public class AcquireHost extends ActionBarActivity {
             return false;
         }
     }
-    
+
+    /*
+        Date:       March 7, 2014
+        AsyncTask:   AsyncLookup
+        Designer:   Julian Brandrick
+        Programmer:  Julian Brandrick
+
+        Description: This class creates a UDP socket in a background thread and displays any
+        exceptions it catches to the user.
+    */
     private class AsyncLookup extends AsyncTask<Context, Void, String>
     {
 
