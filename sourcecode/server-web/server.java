@@ -142,33 +142,32 @@ public class Server extends Thread
 
         int index = 0;
         int nextIndex = 0;
-        // plan B
-        //char[] msg = message.toCharArray();
-        //Arrays.copyOfRange(msg, index, nextIndex - 1);
+
+        // name|ip|time|lat|lon|
 
         nextIndex = getNextDivider(message, index);
-        if (index < 0) die(err);
-        name = message.substring(index, nextIndex - 1);
+        if (nextIndex < 0) die(err);
+        name = message.substring(index, nextIndex);
         index = nextIndex + 1;
 
         nextIndex = getNextDivider(message, index);
-        if (index < 0) die(err);
-        ip = message.substring(index, nextIndex - 1);
+        if (nextIndex < 0) die(err);
+        ip = message.substring(index, nextIndex);
         index = nextIndex + 1;
 
         nextIndex = getNextDivider(message, index);
-        if (index < 0) die(err);
-        time = message.substring(index, nextIndex - 1);
+        if (nextIndex < 0) die(err);
+        time = message.substring(index, nextIndex);
         index = nextIndex + 1;
 
         nextIndex = getNextDivider(message, index);
-        if (index < 0) die(err);
-        lat = message.substring(index, nextIndex - 1);
+        if (nextIndex < 0) die(err);
+        lat = message.substring(index, nextIndex);
         index = nextIndex + 1;
 
         nextIndex = getNextDivider(message, index);
-        if (index < 0) die(err);
-        lon = message.substring(index, nextIndex - 1);
+        if (nextIndex < 0) die(err);
+        lon = message.substring(index, nextIndex);
 
         return "    <user>\n" +
                "        <name>"      + name + "</name>\n" +
@@ -182,6 +181,7 @@ public class Server extends Thread
 
     public int getNextDivider(String message, int start)
     {
+        // field|
         for (int i = start; i < message.length(); i++)
         {
             if (message.charAt(i) == '|') return i;
