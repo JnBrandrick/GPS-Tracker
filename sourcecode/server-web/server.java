@@ -1,40 +1,24 @@
-/*---------------------------------------------------------------------------------------
---  Source File:        Server.java - a simple Java UDP (multi-threaded) echo server
+/*------------------------------------------------------------------------------------------------------------------
+-- SOURCE FILE: Server.java
 --
---  Classes:        Server        - public class
---              DatagramSocket  - java.net
---              DatagramPacket  - java.net
---              
---  Methods:
---              getAddress      (DatagramPacket Class)
---              getPort         (DatagramPacket Class)
---              getLength       (DatagramPacket Class)
---              getLocalPort        (DatagramSocket Class)
---              setSoTimeout        (DatagramSocket Class)
---              send            (DatagramSocket Class)
---              receive         (DatagramSocket Class)
---              
+-- PROGRAM: GPS-Tracker
 --
---  Date:           February 8, 2014
+-- FUNCTIONS:
+--    int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hprevInstance, LPSTR lspszCmdParam, int nCmdShow)
+--    LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 --
---  Revisions:      (Date and Description)
---                  
---  Designer:       Aman Abdulla
---              
---  Programmer:     Aman Abdulla
+-- DATE: March 12, 2015
 --
---  Notes:
---  The program illustrates the use of the java.net package to implement a basic
---  echo server.The server is multi-threaded so every new client connection is 
---  handled by a separate thread.
---  
---  The application receives a string from an echo client and simply sends back after 
---  displaying it. 
+-- REVISIONS: Created March 10, Finished March 12, 2015
 --
---  Generate the class file and run it as follows:
---          javac Server
---          java Server <server port>
----------------------------------------------------------------------------------------*/
+-- DESIGNER: Aman Abdulla, Michael Chimick
+--
+-- PROGRAMMER: Michael Chimick
+--
+-- NOTES:
+-- This server recieves a formatted string, extracts the data, and stores it into an xml file
+--
+----------------------------------------------------------------------------------------------------------------------*/
 
 import java.net.DatagramSocket;
 import java.net.DatagramPacket;
@@ -52,15 +36,57 @@ public class Server extends Thread
     private int ClientPort;
     private DatagramSocket ListeningSocket;
     private DatagramPacket dgram;
-    private static final int DgramSize = 1024;
+
+    private static final int DgramSize = 256;
+    private static final int DefaultPort = 7000;
+
     private byte[] PacketData;
     private InetAddress Addr;
 
+    /*------------------------------------------------------------------------------------------------------------------
+    -- FUNCTION: Server
+    --
+    -- DATE: March 12, 2015
+    --
+    -- REVISIONS: Created March 10, Finished March 12, 2015
+    --
+    -- DESIGNER: Michael Chimick
+    --
+    -- PROGRAMMER: Michael Chimick
+    --
+    -- INTERFACE: public Server (int port) throws IOException
+    --
+    -- RETURNS: N/A
+    --
+    -- NOTES:
+    -- Constructor for the server class
+    -- Throws an exception if the port is invalid
+    --
+    ----------------------------------------------------------------------------------------------------------------------*/
     public Server (int port) throws IOException
     {
         ListeningSocket = new DatagramSocket (port);
     }
 
+    /*------------------------------------------------------------------------------------------------------------------
+    -- FUNCTION: run
+    --
+    -- DATE: March 12, 2015
+    --
+    -- REVISIONS: Created March 10, Finished March 12, 2015
+    --
+    -- DESIGNER: Michael Chimick
+    --
+    -- PROGRAMMER: Michael Chimick
+    --
+    -- INTERFACE: public void run()
+    --
+    -- RETURNS: void
+    --
+    -- NOTES:
+    -- Driver for the server
+    --
+    ----------------------------------------------------------------------------------------------------------------------*/
     public void run()
     {
         while(true)
@@ -97,6 +123,26 @@ public class Server extends Thread
         }
     }
 
+    /*------------------------------------------------------------------------------------------------------------------
+    -- FUNCTION: addPoint
+    --
+    -- DATE: March 12, 2015
+    --
+    -- REVISIONS: Created March 10, Finished March 12, 2015
+    --
+    -- DESIGNER: Michael Chimick
+    --
+    -- PROGRAMMER: Michael Chimick
+    --
+    -- INTERFACE: public void addPoint(String message)
+    --                String message // formatted string containing point data
+    --
+    -- RETURNS: void
+    --
+    -- NOTES:
+    -- Takes a message string and adds thee data it contains to an xml file
+    --
+    ----------------------------------------------------------------------------------------------------------------------*/
     public void addPoint(String message)
     {
         FileInputStream in;
@@ -129,7 +175,26 @@ public class Server extends Thread
         }
     }
 
-    // Requires the format of the input be name|ip|time|lat|lon|
+    /*------------------------------------------------------------------------------------------------------------------
+    -- FUNCTION: getPoint
+    --
+    -- DATE: March 12, 2015
+    --
+    -- REVISIONS: Created March 10, Finished March 12, 2015
+    --
+    -- DESIGNER: Michael Chimick
+    --
+    -- PROGRAMMER: Michael Chimick
+    --
+    -- INTERFACE: public String getPoint(String message)
+    --                String message // formatted string containing point data
+    --
+    -- RETURNS: String // string formatted for the xml file
+    --
+    -- NOTES:
+    -- Takes a formatted string and reformats it for the xml file
+    --
+    ----------------------------------------------------------------------------------------------------------------------*/
     public String getPoint(String message)
     {
         String err = "File missing fields";
@@ -179,6 +244,27 @@ public class Server extends Thread
                "</users>";
     }
 
+    /*------------------------------------------------------------------------------------------------------------------
+    -- FUNCTION: getNextDivider
+    --
+    -- DATE: March 12, 2015
+    --
+    -- REVISIONS: Created March 10, Finished March 12, 2015
+    --
+    -- DESIGNER: Michael Chimick
+    --
+    -- PROGRAMMER: Michael Chimick
+    --
+    -- INTERFACE: public int getNextDivider(String message, int start)
+    --                String message // formatted string containing point data
+    --                int start      // point to start parse from
+    --
+    -- RETURNS: int // index of next divider
+    --
+    -- NOTES:
+    -- Finds the next divider char '|' in the string from the start index
+    --
+    ----------------------------------------------------------------------------------------------------------------------*/
     public int getNextDivider(String message, int start)
     {
         // field|
@@ -190,6 +276,26 @@ public class Server extends Thread
         return -1;
     }
 
+    /*------------------------------------------------------------------------------------------------------------------
+    -- FUNCTION: die
+    --
+    -- DATE: March 12, 2015
+    --
+    -- REVISIONS: Created March 10, Finished March 12, 2015
+    --
+    -- DESIGNER: Michael Chimick
+    --
+    -- PROGRAMMER: Michael Chimick
+    --
+    -- INTERFACE: public void die(String message)
+    --                String message // death message
+    --
+    -- RETURNS: void
+    --
+    -- NOTES:
+    -- Prints an error message and kills the program
+    --
+    ----------------------------------------------------------------------------------------------------------------------*/
     public void die(String message)
     {
         System.out.println(message);
@@ -197,11 +303,32 @@ public class Server extends Thread
         System.exit(-1);
     }
 
+    /*------------------------------------------------------------------------------------------------------------------
+    -- FUNCTION: main
+    --
+    -- DATE: March 12, 2015
+    --
+    -- REVISIONS: Created March 10, Finished March 12, 2015
+    --
+    -- DESIGNER: Michael Chimick
+    --
+    -- PROGRAMMER: Michael Chimick
+    --
+    -- INTERFACE: public static void main (String [] args)
+    --                String [] args // command line arguments
+    --
+    -- RETURNS: void
+    --
+    -- NOTES:
+    -- Takes a user defined port, or assigns the default
+    -- Starts the server thread
+    --
+    ----------------------------------------------------------------------------------------------------------------------*/
     public static void main (String [] args)
     {
         int port = 0;
         if(args.length != 1)
-            port = 7000;
+            port = DefaultPort;
         else
             port = Integer.parseInt(args[0]);
        
