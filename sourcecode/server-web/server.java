@@ -44,6 +44,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.String;
+import java.util.Arrays;
 
 public class Server extends Thread
 {
@@ -141,33 +142,33 @@ public class Server extends Thread
 
         int index = 0;
         int nextIndex = 0;
+        // plan B
+        //char[] msg = message.toCharArray();
+        //Arrays.copyOfRange(msg, index, nextIndex - 1);
 
-        char[] msg = message.toCharArray();
-
-        nextIndex = getNextDivider(msg, index);
+        nextIndex = getNextDivider(message, index);
         if (index < 0) die(err);
         name = message.substring(index, nextIndex - 1);
         index = nextIndex + 1;
 
-        nextIndex = getNextDivider(msg, index);
+        nextIndex = getNextDivider(message, index);
         if (index < 0) die(err);
         ip = message.substring(index, nextIndex - 1);
         index = nextIndex + 1;
 
-        nextIndex = getNextDivider(msg, index);
+        nextIndex = getNextDivider(message, index);
         if (index < 0) die(err);
         time = message.substring(index, nextIndex - 1);
         index = nextIndex + 1;
 
-        nextIndex = getNextDivider(msg, index);
+        nextIndex = getNextDivider(message, index);
         if (index < 0) die(err);
         lat = message.substring(index, nextIndex - 1);
         index = nextIndex + 1;
 
-        nextIndex = getNextDivider(msg, index);
+        nextIndex = getNextDivider(message, index);
         if (index < 0) die(err);
         lon = message.substring(index, nextIndex - 1);
-        index = nextIndex + 1;
 
         return "    <user>\n" +
                "        <name>"      + name + "</name>\n" +
@@ -179,11 +180,11 @@ public class Server extends Thread
                "</users>";
     }
 
-    public int getNextDivider(char[] message, int start)
+    public int getNextDivider(String message, int start)
     {
-        for (int i = start; i < message.length; i++)
+        for (int i = start; i < message.length(); i++)
         {
-            if (message[i] == '|') return i;
+            if (message.charAt(i) == '|') return i;
         }
 
         return -1;
