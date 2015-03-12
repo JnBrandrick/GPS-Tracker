@@ -111,7 +111,8 @@ public class Server extends Thread
 
             out = new FileOutputStream("data.xml");
             point = getPoint(message);
-            out.write(point.getBytes(), skipLength, point.length());
+            byte bPoint[] = point.getBytes();
+            out.write(bPoint, skipLength, bPoint.length);
         }
         catch(Exception e)
         {
