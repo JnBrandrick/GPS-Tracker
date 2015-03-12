@@ -100,19 +100,26 @@ public class Server extends Thread
     {
         FileInputStream in;
         FileOutputStream out;
-        int skipLength = 0;
+        int keepLength = 0;
         String point;
 
         try
         {
             in = new FileInputStream("data.xml");
-            skipLength = in.available() - 8;
+            keepLength = in.available() - 8;
+            byte[] keep = new byte[keepLength];
+            in.read(keep);
             in.close();
 
             out = new FileOutputStream("data.xml");
             point = getPoint(message);
             byte bPoint[] = point.getBytes();
-            out.write(bPoint, skipLength, bPoint.length);
+
+            byte[] result = new byte[keep.length + bPoint.length];
+            System.arraycopy(keep, 0, result, 0, keep.length);
+            System.arraycopy(bPoint, 0, result, keep.length, bPoint.length);
+
+            out.write(result);
         }
         catch(Exception e)
         {
