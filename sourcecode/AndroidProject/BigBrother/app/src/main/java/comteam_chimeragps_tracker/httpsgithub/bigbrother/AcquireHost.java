@@ -48,6 +48,17 @@ public class AcquireHost extends ActionBarActivity {
             allFields();
         }
     };
+    /*
+     * Programmer: Jeff Bayntun
+     * Designer: Jeff Bayntun
+     *
+     * Function: onCreate
+     *
+     *
+     * Notes:
+     *  Creates the AcquireHost activity, pre-populating the last used host
+     *  and port into the GUI
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +116,16 @@ public class AcquireHost extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+     * Programmer: Jeff Bayntun
+     * Designer: Jeff Bayntun
+     *
+     * Function: clearFields
+     *
+     *
+     * Notes:
+     *  Listener for button to clear all input fields in this Activity
+     */
     public void clearFields(View view)
     {
         EditText[] views = new EditText[2];
@@ -117,6 +138,17 @@ public class AcquireHost extends ActionBarActivity {
         }
     }
 
+    /*
+     * Programmer: Jeff Bayntun, Julian Brandrick
+     * Designer: Jeff Bayntun
+     *
+     * Function: submitConnection
+     *
+     *
+     * Notes:
+     *  Listener for button submit button.  Validates input, verifies host
+     *  is reachable, then opens Tracking Service Activity
+     */
     public void submitConnection(View view)
     {
         String host, port;
@@ -151,6 +183,16 @@ public class AcquireHost extends ActionBarActivity {
         finish();
     }
 
+    /*
+     * Programmer: Jeff Bayntun, Julian Brandrick
+     * Designer: Jeff Bayntun
+     *
+     * Function: allFields
+     *
+     *
+     * Notes:
+     *  ensures all fields have been filled in, toggles color of submit button
+     */
     boolean allFields()
     {
         Button submit = (Button) findViewById(R.id.submit);

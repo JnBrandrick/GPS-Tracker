@@ -27,15 +27,29 @@ public class ShowMap extends ActionBarActivity {
     private WebView web = null;
     private boolean all = false;
 
-    private final String ALL_PAGE = "http://farm2.static.flickr.com/1440/5166990104_5942b1e4d1_b.jpg";
-    private final String MY_PAGE = "http://www.damninteresting.com/";
+    private String ALL_PAGE;
+    private String MY_PAGE;
     private final String MY_HISTORY = "View My History";
     private final String ALL_HISTORY = "View All History";
 
+    /*
+     * Programmer: Jeff Bayntun
+     * Designer: Jeff Bayntun
+     *
+     * Function: onCreate
+     *
+     *
+     * Notes:
+     *  opens browser in this activity, loading page based on which button
+     * was selected (boolean in intent)
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_map);
+
+        ALL_PAGE = "http://" + PreferenceHandler.getPreference(this, PreferenceHandler.HOST_PREFERENCE);
+        MY_PAGE = ALL_PAGE + "/" + "myid";
 
         // get bundle with info for correct webview
         Intent intent = getIntent();
@@ -77,6 +91,16 @@ public class ShowMap extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+    * Programmer: Jeff Bayntun
+    * Designer: Jeff Bayntun
+    *
+    * Function: openTracking
+    *
+    *
+    * Notes:
+    *  return to tracking activity
+    */
     public void openTracking(View view)
     {
         // open in-app browser activity to show this users results
@@ -84,6 +108,16 @@ public class ShowMap extends ActionBarActivity {
         startActivity(myIntent);
     }
 
+    /*
+    * Programmer: Jeff Bayntun
+    * Designer: Jeff Bayntun
+    *
+    * Function: onCreate
+    *
+    *
+    * Notes:
+    *  toggles website displayed
+    */
     public void switchMap(View view)
     {
         all = !all;

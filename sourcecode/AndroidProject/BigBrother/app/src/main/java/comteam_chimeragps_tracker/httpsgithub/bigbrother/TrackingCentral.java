@@ -25,6 +25,16 @@ public class TrackingCentral extends ActionBarActivity {
     boolean tracking;
     private final String START_TRACKING = "Start Tracking";
     private final String STOP_TRACKING = "Stop Tracking";
+    /*
+    * Programmer: Jeff Bayntun
+    * Designer: Jeff Bayntun
+    *
+    * Function: onCreate
+    *
+    *
+    * Notes:
+    *  creates tracking activity
+    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +72,16 @@ public class TrackingCentral extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+    * Programmer: Jeff Bayntun
+    * Designer: Jeff Bayntun
+    *
+    * Function: toggleTracking
+    *
+    *
+    * Notes:
+    *  starts or stops tracking service
+    */
     public void toggleTracking(View view)
     {
         // start or stop tracking
@@ -87,6 +107,16 @@ public class TrackingCentral extends ActionBarActivity {
         toggle.setText(t);
     }
 
+    /*
+    * Programmer: Jeff Bayntun
+    * Designer: Jeff Bayntun
+    *
+    * Function: changeServer
+    *
+    *
+    * Notes:
+    *  opens AcquireHost activity
+    */
     public void changeServer(View view)
     {
         // go back to AcquireHost activity
@@ -99,6 +129,16 @@ public class TrackingCentral extends ActionBarActivity {
         finish();
     }
 
+    /*
+    * Programmer: Jeff Bayntun
+    * Designer: Jeff Bayntun
+    *
+    * Function: showMine
+    *
+    *
+    * Notes:
+    *  loads Page for this users history
+    */
     public void showMine(View view)
     {
         // open in-app browser activity to show this users results
@@ -107,6 +147,16 @@ public class TrackingCentral extends ActionBarActivity {
         startActivity(myIntent);
     }
 
+    /*
+    * Programmer: Jeff Bayntun
+    * Designer: Jeff Bayntun
+    *
+    * Function: showMine
+    *
+    *
+    * Notes:
+    *  loads Page all histories
+    */
     public void showAll(View view)
     {
         // open in-app browser activity to show all users results
