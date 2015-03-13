@@ -6,6 +6,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.provider.Settings;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -41,27 +42,37 @@ public class ClientConnect implements Runnable {
     private String localIP;
     private String packetData;
     private int    port;
-    private boolean packetSent;
 
     /*
      * Programmer: Julian Brandrick
      * Designer: Julian Brandrick
      *
-     * Constructor: ClientConnect (Context)
-     * 
-     * Throws:  SocketException       -> Socket could not be initialized.
-     *          UnknownHostException  -> Host name could not be found.
-     *          NumberFormatException -> Port was not a number.
+     * Constructor: public ClientConnect (Context)
      * 
      * Notes:
-     *  Pulls the host name and port number from the PreferenceHandler, instantiates a 
-     *  UDP socket and gets the IP address of the given host name.
+     *  Initializes the context and deviceID.
      */
     public ClientConnect(Context appContext) {
         context = appContext;
         deviceID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
+    /*
+     * Programmer: Julian Brandrick
+     * Designer: Julian Brandrick
+     *
+     * Function: private initSocket (void)
+     * 
+     * Throws:  SocketException       -> Socket could not be initialized.
+     *          UnknownHostException  -> Host name could not be found.
+     *          NumberFormatException -> Port was not a number.
+     * 
+     * Return: void
+     * 
+     * Notes:
+     *  Pulls the host name and port number from the PreferenceHandler, instantiates a 
+     *  UDP socket and gets the IP address of the given host name.
+     */
     private void initSocket() throws SocketException, UnknownHostException, NumberFormatException {
         String[] preferences = PreferenceHandler.checkPreferences(context);
 
@@ -74,33 +85,21 @@ public class ClientConnect implements Runnable {
 
     /*
      * Programmer: Julian Brandrick
-     * Designer: Julian Brandrick
+     * Designer: CYB (StackOverflow user name)
      *
-     * Function: packetWasSent (void)
+     * Function: private setLocalIP (void)
      * 
-     * Return: boolean
-     *      true  -> Packet was sent
-     *      false -> Sending failed
+     * Return: void
      * 
      * Notes:
-     *  Lets the rest of the application know if the latest packet was sent successfully.
+     *  Finds the IP of the current device and stores it in dotted decimal notation.
      */
-    public boolean packetWasSent()
-    {
-        return packetSent;
-    }
-    
-    public synchronized void setLocalIP()
+    private void setLocalIP()
     {
         WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInf = wifiMan.getConnectionInfo();
         int ipAddress = wifiInf.getIpAddress();
         localIP = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
-    }
-
-    public String getLocalIP()
-    {
-        return localIP;
     }
 
     /*
@@ -113,6 +112,8 @@ public class ClientConnect implements Runnable {
      * 
      * Notes:
      *  Sets the packet data to be sent to the server.
+     *  The format is:
+     *      name|local ip|time|latitude|longitude|
      */
     public void setPacketData(String time, String latitude, String longitude)
     {
@@ -123,19 +124,14 @@ public class ClientConnect implements Runnable {
      * Programmer: Julian Brandrick
      * Designer: Julian Brandrick
      *
-     * Function: run (void)
+     * Function: public run (void)
      * 
      * Return: void
      * 
      * Notes:
-     *  Runs in a thread separate from the UI thread.
+     *  Sends the data to the server in a datagram via UDP.
+     *  This is accomplished in a separate thread.
      *  
-     *  Sends the packet to the server. A global boolean is used to validate if it was 
-     *  successful or not.
-     *  
-     *  packetSend => boolean
-     *      true  -> Packet sent successfully
-     *      false -> Packet sending failed
      */
     public void run()
     {
@@ -148,12 +144,10 @@ public class ClientConnect implements Runnable {
         try
         {
             dgramSocket.send(dgramPacket);
-
-            packetSent = true;
         }
         catch(IOException e)
         {
-            packetSent = false;
+            Log.e("Run Exception: ", e.getMessage());
         }
     }
 
@@ -177,7 +171,7 @@ public class ClientConnect implements Runnable {
      * Programmer: Julian Brandrick
      * Designer: Julian Brandrick
      *
-     * Function: foundServer (void)
+     * Function: public foundServer (void)
      * 
      * Return: boolean
      *      true  -> Asynchronous task was uninterrupted and the UDP socket was created
@@ -185,7 +179,7 @@ public class ClientConnect implements Runnable {
      * 
      * Notes:
      *  Runs the AsyncLookup class and gets the output of its doInBackground method. If the task
-     *  was successful, the returned String will be empty. Else it will contain an error phrase.
+     *  was successful, the returned String will be empty. Else it will contain an error message.
      */
     public boolean foundServer()
     {
