@@ -1,0 +1,51 @@
+class ClientConnect
+
+    ClientConnect
+    {
+        main constructor for ClientConnect class
+    
+        create non-networking variables
+    }
+    
+    function InitSocket
+    {
+        initialize networking components
+            create UDP socket
+            pull server address based on host name
+    }
+    
+    function SetLocalIP
+    {
+        pull ip address of local device
+    }
+    
+    function SetPacketData
+    {
+        set data of UDP packet
+    }
+    
+    function Run
+    {
+        send UDP datagram in separate thread
+    }
+    
+    function Teardown
+    {
+        close UDP socket
+    }
+    
+    function FoundServer
+    {
+        error-checks to see if the networking setup completed successfully
+    }
+    
+    class AsyncLookup
+    
+        runs InitSocket and SetLocalIP on a background thread
+        
+        if there are any errors
+            display an error message to the user on the UI thread
+    
+    end class
+
+end class

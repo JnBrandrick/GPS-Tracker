@@ -31,7 +31,8 @@ import java.util.Date;
 
 
 public class TrackingService extends Service {
-
+    private ClientConnect clientNet;
+    
     private Looper mServiceLooper;
     private ServiceHandler mServiceHandler;
     boolean quit;
@@ -66,6 +67,10 @@ public class TrackingService extends Service {
         // Get the HandlerThread's Looper and use it for our Handler
         mServiceLooper = thread.getLooper();
         mServiceHandler = new ServiceHandler(mServiceLooper);
+
+        clientNet = new ClientConnect(this.getApplicationContext());
+
+        clientNet.foundServer();
     }
 
     @Override
@@ -107,6 +112,8 @@ public class TrackingService extends Service {
         Helpers.serviceToast(this, "service done", Toast.LENGTH_SHORT);
         PreferenceHandler.setPreference(this, PreferenceHandler.TRACKING_PREFERENCE, "false");
 
+        clientNet.teardown();
+        
         super.onDestroy();
     }
 
@@ -151,12 +158,16 @@ public class TrackingService extends Service {
             }
         }
 
+        // Send goes here
         private void sendLocation (Location l, String time)
         {
             Log.d("Latitude", String.valueOf(l.getLatitude()) );
             Log.d("Longitude", String.valueOf(l.getLongitude()) );
-        }
 
+            clientNet.setPacketData(time, String.valueOf(l.getLatitude()), String.valueOf(l.getLongitude()));
+
+            new Thread(clientNet).start();
+        }
 
         private class MyLocationListener implements android.location.LocationListener
         {
