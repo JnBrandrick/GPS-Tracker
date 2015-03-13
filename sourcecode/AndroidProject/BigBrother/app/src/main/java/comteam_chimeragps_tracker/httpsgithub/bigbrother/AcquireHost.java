@@ -176,6 +176,8 @@ public class AcquireHost extends ActionBarActivity {
             return;
         }
         
+        clientNet.teardown();
+        
         //open other view
         Intent myIntent = new Intent(this, TrackingCentral.class);
         startActivity(myIntent);

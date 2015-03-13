@@ -112,6 +112,8 @@ public class TrackingService extends Service {
         Helpers.serviceToast(this, "service done", Toast.LENGTH_SHORT);
         PreferenceHandler.setPreference(this, PreferenceHandler.TRACKING_PREFERENCE, "false");
 
+        clientNet.teardown();
+        
         super.onDestroy();
     }
 
