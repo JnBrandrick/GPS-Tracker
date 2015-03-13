@@ -64,7 +64,7 @@ function loadData()
 	}
 
 	//open the file
-	xhttp.open("GET", "../data.xml", false);
+	xhttp.open("GET", "data.xml", false);
 	xhttp.send();
 	xmlDoc = xhttp.responseXML;
 

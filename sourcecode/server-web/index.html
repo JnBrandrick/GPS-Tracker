@@ -27,50 +27,28 @@
 
           <div id="nav">
               <div>
-                  <a id="nav-home" href="home.html">Home</a>
+                  <a id="nav-home" href="/">Home</a>
             </div>
             <div>
-              <a id="nav-map" href="map.html">Map</a>
+              <a id="nav-map" href="pages/map.html">Map</a>
             </div>
           </div>
-        </div> 
+        </div>
 
-    <form>
-      <h1 id="loginHeader">Login</h1>
-
-      <div id="from">
-        <label for="username">Username:</label>
-        <input type="text" id="userid" name="userid">
-      </div>
-
-      <div id="reply">
-        <label for="password">Password:</label>
-        <input type="password" id="pswrd" name="pswrd">
-      </div>
-
-     
-      <div class="button">
-        <button type="submit" onclick="checkLogin(this.form)">Login</button>
-      </div>
-    </form>
-    
-    <script language="javascript">
-    function checkLogin(form)
-    {
-    
-        //check if the the username and password match
-        if(form.userid.value == "teamchimera" && form.pswrd.value == "datacomm")
-        {
-            //switch to the home page
-            window.open('pages/home.html')
-        }
-        else
-        {
-            //display login error
-            alert("Incorrect username or password.");
-        }
-    }
-    </script>
+        <h1> Active Users: </h1>
+        <p id="content"> This website displays the location of mobile users. </p>
+        <!-- Table content -->
+        <table id="users">
+          <thead>
+                <th>User</th>
+                <th>IP</th>
+                <th>Time</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
 
         <!-- Footer -->
         <div class="footer">
