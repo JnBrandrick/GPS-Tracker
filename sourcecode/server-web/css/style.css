@@ -9,6 +9,11 @@
     src: url(ClementePDai-Regular.ttf);
 }
 
+@font-face {
+    font-family: Login;
+    src: url(veteran_typewriter.ttf);
+}
+
 
 html
 {
@@ -160,4 +165,105 @@ body #content
 	bottom: 0px;
 	font-family: sans-serif, arial;
 	color: #AAA;
+}
+
+/** Form styling **/
+form 
+{ 
+    text-align: left; 
+    display: inline-block; 
+    padding: 20px; 
+    width: auto; 
+}
+
+input, textarea
+{
+	line-height: 25px;
+	padding: 10px;
+	width: 285px;
+	border: 1px solid #E5E5E5;
+	outline: 0;
+	font: normal 15px/150% Verdana, sans-serif;
+    
+
+	-webkit-box-shadow: 0 0 8px rgba(0,0,0,.1);
+	-moz-box-shadow: 0 0 8px rgba(0,0,0,.1);
+	box-shadow: 0 0 8px rgba(0,0,0,.1);
+}
+
+textarea 
+{
+	width: 420px;
+	max-width: 400px;
+	height: 180px;
+}
+
+input:hover, input:focus,
+textarea:hover, textarea:focus 
+{
+	border-color: #C9C9C9;
+
+	-webkit-box-shadow: 0 0 8px rgba(0,0,0,.15);
+	-moz-box-shadow: 0 0 8px rgba(0,0,0,.15);
+	box-shadow: 0 0 8px rgba(0,0,0,.15);
+}
+
+label 
+{
+	padding-left: 10px;
+	color: #FFF;
+	display: inline-block;
+	width: 155px;
+ 	font: normal 15px/150% Verdana, sans-serif;
+    
+}
+
+input[type=submit] 
+{
+    text-al
+	width: auto;
+	padding: 9px 15px;
+	background: #617798;
+	border: 0;
+	font-size: 14px;
+	font-weight: bold;
+	color: #FFFFFF;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	cursor: pointer;
+}
+
+input[type=submit]:hover 
+{
+	background: #7387A6;
+	-webkit-box-shadow: 1px 1px 8px rgba(0,0,0,.4);
+}
+
+select
+{
+	padding: 5px 40px 5px 5px; 
+	height:40px; 
+	font-family: Verdana, sans-serif;
+	background: url(../arrow.png) 90% 50% no-repeat;
+
+	-webkit-appearance: none;
+	-webkit-border-radius: 5px;
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+	
+	cursor: pointer;
+	border: 1px solid #CCC;
+	color: #999;
+	font-size: 90%;
+	overflow: hidden;
+}
+
+select:hover, select:focus 
+{
+	-webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+	outline: 0;
+	cursor: pointer;
+	border: 1px solid #CCC;
+	color: #999;
+	font-size: 90%;
+	overflow: hidden;
 }
