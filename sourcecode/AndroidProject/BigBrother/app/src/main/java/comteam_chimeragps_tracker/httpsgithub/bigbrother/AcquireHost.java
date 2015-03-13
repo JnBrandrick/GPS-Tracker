@@ -140,10 +140,10 @@ public class AcquireHost extends ActionBarActivity {
 
         //try to connect
         
-        if(!foundServer())
-        {
-            return;
-        }
+      //  if(!foundServer())
+      //  {
+       //     return;
+      //  }
 
         //open other view
         Intent myIntent = new Intent(this, TrackingCentral.class);

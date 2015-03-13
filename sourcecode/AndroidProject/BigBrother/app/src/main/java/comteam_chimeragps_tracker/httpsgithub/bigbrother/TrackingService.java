@@ -14,7 +14,9 @@ package comteam_chimeragps_tracker.httpsgithub.bigbrother;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -25,13 +27,6 @@ import android.os.Process;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-
-import java.text.DateFormat;
 import java.util.Date;
 
 
@@ -41,10 +36,11 @@ public class TrackingService extends Service {
     private ServiceHandler mServiceHandler;
     boolean quit;
     Context context;
+    private android.location.LocationListener mListener;
+    private LocationManager locationManager;
 
-    private final long FASTEST_INTERVAL = 5 * 1000;
-    private final long NORMAL_INTERVAL = 10 * 1000;
-
+    private final long INTERVAL = 15 * 60 * 1000; // every 15 minutes
+    private final float DISTANCE = 500; // every 500m
     @Override
     public void onCreate()
     {
@@ -84,6 +80,8 @@ public class TrackingService extends Service {
     @Override
     public void onDestroy() {
         quit = true;
+        locationManager.removeUpdates(mListener);
+        mServiceLooper.quit();
         Helpers.serviceToast(this, "service done", Toast.LENGTH_SHORT);
         PreferenceHandler.setPreference(this, PreferenceHandler.TRACKING_PREFERENCE, "false");
 
@@ -94,15 +92,10 @@ public class TrackingService extends Service {
 
     // Handler that receives messages from the thread
     private final class ServiceHandler extends Handler
-            implements  GoogleApiClient.ConnectionCallbacks,
-                        GoogleApiClient.OnConnectionFailedListener,
-            LocationListener {
-
-        private GoogleApiClient mGoogleApiClient;
-        private Location mLastLocation;
-        private Location mCurrentLocation;
-        private String mLastUpdateTime;
-        private LocationRequest mLocationRequest;
+    {
+        private Location mLocation;
+        private Criteria mCriteria;
+        private String mProvider;
 
         public ServiceHandler(Looper looper) {
             super(looper);
@@ -110,52 +103,18 @@ public class TrackingService extends Service {
         @Override
         public void handleMessage(Message msg)
         {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            mListener = new MyLocationListener();
+            mCriteria = new Criteria();
+            mCriteria.setAccuracy(Criteria.ACCURACY_MEDIUM );
+            mProvider = locationManager.getBestProvider(mCriteria, false);
+            mLocation = locationManager.getLastKnownLocation(mProvider);
+            locationManager.requestLocationUpdates(mProvider, INTERVAL, DISTANCE, mListener);
 
-            buildGoogleApiClient();
-            createLocationRequest();
-
-            Log.d("buildApi", "aaaaaaaaaaaaaaaaaaaa");
-            // Normally we would do some work here, like download a file.
-            // For our sample, we just sleep for 5 seconds.
-            int count = 0;
-            while (!quit)
+            if (mLocation != null)
             {
-                Log.d("hello ", " " + (++count));
-
-                synchronized (this)
-                {
-
-                    try
-                    {
-                        wait(3*1000);
-                    }
-                    catch (Exception e)
-                    {
-                        Log.d("Tracking Service Error", " Problems");
-                        stopSelf(msg.arg1);
-
-                    }
-
-                }
-
+              mListener.onLocationChanged(mLocation);
             }
-        }
-
-        protected void createLocationRequest() {
-            mLocationRequest = new LocationRequest();
-            mLocationRequest.setInterval(NORMAL_INTERVAL);
-            mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
-            mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        }
-
-        protected synchronized void buildGoogleApiClient()
-        {
-            Log.d("buildApi", "xxxxxxxxxxxxxxxxxx");
-            mGoogleApiClient = new GoogleApiClient.Builder(context)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
         }
 
         private void sendLocation (Location l, String time)
@@ -164,38 +123,38 @@ public class TrackingService extends Service {
             Log.d("Longitude", String.valueOf(l.getLongitude()) );
         }
 
-        @Override
-        public void onLocationChanged(Location location) {
-            mCurrentLocation = location;
-            mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
-            sendLocation(location, mLastUpdateTime);
-        }
 
-
-        @Override
-        public void onConnected(Bundle connectionHint)
+        private class MyLocationListener implements android.location.LocationListener
         {
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                    mGoogleApiClient);
-            if (mLastLocation != null) {
-                Log.d("Latitude", String.valueOf(mLastLocation.getLatitude()) );
-                Log.d("Longitude", String.valueOf(mLastLocation.getLongitude()) );
+            Long time;
+            Date myDate;
+            @Override
+            public void onLocationChanged(Location location) {
+                // Initialize the location fields
+                mLocation = location;
+                //time = location.getTime();
+
+                sendLocation(mLocation, "hahahaha");
+
             }
-            LocationServices.FusedLocationApi.requestLocationUpdates(
-                    mGoogleApiClient, mLocationRequest, this);
 
-        }
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras)
+            {
+                Log.d(provider, ""+ status);
+            }
 
-        @Override
-        public void onConnectionSuspended(int cause)
-        {
+            @Override
+            public void onProviderEnabled(String provider)
+            {
+                Log.d(provider, "enabled");
+            }
 
-        }
-
-        @Override
-        public void onConnectionFailed(ConnectionResult result)
-        {
-
+            @Override
+            public void onProviderDisabled(String provider)
+            {
+                Log.d(provider, "disabled");
+            }
         }
     }
 
