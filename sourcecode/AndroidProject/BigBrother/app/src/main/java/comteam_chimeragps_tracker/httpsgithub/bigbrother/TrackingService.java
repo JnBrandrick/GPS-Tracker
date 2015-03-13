@@ -41,6 +41,17 @@ public class TrackingService extends Service {
 
     private final long INTERVAL = 15 * 60 * 1000; // every 15 minutes
     private final float DISTANCE = 500; // every 500m
+    /*
+    * Programmer: Jeff Bayntun
+    * Designer: Jeff Bayntun
+    *
+    * Function: onCreate
+    *
+    *
+    * Notes:
+    *  creates the tracking service, starts a thread to handle location finding.
+    *
+    */
     @Override
     public void onCreate()
     {
@@ -77,6 +88,17 @@ public class TrackingService extends Service {
         return null;
     }
 
+    /*
+    * Programmer: Jeff Bayntun
+    * Designer: Jeff Bayntun
+    *
+    * Function: onDestroy
+    *
+    *
+    * Notes:
+    *  destroys service. stops thread and unregisters from the location manager.
+    *
+    */
     @Override
     public void onDestroy() {
         quit = true;
@@ -100,6 +122,18 @@ public class TrackingService extends Service {
         public ServiceHandler(Looper looper) {
             super(looper);
         }
+        /*
+    * Programmer: Jeff Bayntun
+    * Designer: Jeff Bayntun
+    *
+    * Function: handleMessage
+    *
+    *
+    * Notes:
+    *  creates location manager and listener for location changes.
+    *  whenever location listener is invoked, sendLocation is called
+    *
+    */
         @Override
         public void handleMessage(Message msg)
         {
@@ -129,6 +163,17 @@ public class TrackingService extends Service {
             Long time;
             Date myDate;
             @Override
+            /*
+            * Programmer: Jeff Bayntun
+            * Designer: Jeff Bayntun
+            *
+            * Function: onLocationChanged
+            *
+            *
+            * Notes:
+            *  gets current location, calls sendLocation
+            *
+            */
             public void onLocationChanged(Location location) {
                 // Initialize the location fields
                 mLocation = location;

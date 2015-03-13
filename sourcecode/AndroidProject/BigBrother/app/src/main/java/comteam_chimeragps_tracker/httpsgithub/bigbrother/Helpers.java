@@ -13,6 +13,16 @@ import android.widget.Toast;
  */
 public class Helpers {
 
+    /*
+     * Programmer: Jeff Bayntun
+     * Designer: Jeff Bayntun
+     *
+     * Function: makeToast
+     *
+     *
+     * Notes:
+     *  creates a fancy custom toast
+     */
     public static void makeToast(Activity c, String text, int duration)
     {
         LayoutInflater inflater = LayoutInflater.from(c);
@@ -28,6 +38,16 @@ public class Helpers {
         customtoast.show();
     }
 
+    /*
+     * Programmer: Jeff Bayntun
+     * Designer: Jeff Bayntun
+     *
+     * Function: makeToast
+     *
+     *
+     * Notes:
+     *  creates a toast at screen center
+     */
     public static void serviceToast(Context c, String text, int duration)
     {
         Toast t = Toast.makeText(c, text, duration);

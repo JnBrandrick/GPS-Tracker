@@ -23,7 +23,16 @@ public class PreferenceHandler {
 
     static final String PreferenceName = "bigbropref";
 
-
+    /*
+         * Programmer: Jeff Bayntun
+         * Designer: Jeff Bayntun
+         *
+         * Function: checkPreferences
+         *
+         *
+         * Notes:
+         *  checks for current host and port preferences, returns array with these values
+         */
    static String[] checkPreferences(Context c)
    {
        String[] p = new String[2];
@@ -34,6 +43,16 @@ public class PreferenceHandler {
        return p;
    }
 
+    /*
+     * Programmer: Jeff Bayntun
+     * Designer: Jeff Bayntun
+     *
+     * Function: makeToast
+     *
+     *
+     * Notes:
+     *  adds given host and port preferences to the shared preferences file
+     */
     static void addPreferences(Context c, String host, String port)
     {
         SharedPreferences sharedpreferences = c.getSharedPreferences(PreferenceName, Context.MODE_WORLD_READABLE);
@@ -43,12 +62,32 @@ public class PreferenceHandler {
         editor.commit();
     }
 
+    /*
+     * Programmer: Jeff Bayntun
+     * Designer: Jeff Bayntun
+     *
+     * Function: getPreference
+     *
+     *
+     * Notes:
+     *  returns preference for this key, or "" if no preference found
+     */
     static String getPreference(Context c, String key)
     {
         SharedPreferences sharedpreferences = c.getSharedPreferences(PreferenceName, Context.MODE_WORLD_READABLE);
         return sharedpreferences.getString(key, "");
     }
 
+    /*
+     * Programmer: Jeff Bayntun
+     * Designer: Jeff Bayntun
+     *
+     * Function: getPreference
+     *
+     *
+     * Notes:
+     *  sets preference for this key
+     */
     static void setPreference(Context c, String key, String value)
     {
         SharedPreferences sharedpreferences = c.getSharedPreferences(PreferenceName, Context.MODE_WORLD_READABLE);
