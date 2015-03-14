@@ -242,7 +242,7 @@ public class Server extends Thread
 
         return "    <user>\n" +
                "        <name>"      + name + "</name>\n" +
-               "        <ip>"        + ip   + "</ip>\n" +
+               "        <ip>"        + Addr  + "</ip>\n" +
                "        <time>"      + time + "</time>\n" +
                "        <latitude>"  + lat  + "</latitude>\n" +
                "        <longitude>" + lon  + "</longitude>\n" +
