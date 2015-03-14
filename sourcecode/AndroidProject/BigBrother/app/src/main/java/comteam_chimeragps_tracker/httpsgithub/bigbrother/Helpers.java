@@ -1,5 +1,26 @@
 package comteam_chimeragps_tracker.httpsgithub.bigbrother;
 
+/**********************************************************************
+ **  SOURCE FILE:  Helpers.java -  Java file for helpers
+ **
+ **  PROGRAM:    Android GPS // Big Brother
+ **
+ **  FUNCTIONS:
+ **             void serviceToast(Context c, String text, int duration)
+ **              void makeToast(Activity c, String text, int duration)
+ **
+ **  DATE:      March 5, 2014
+ **
+ **
+ **  DESIGNER:    Jeff Bayntun
+ **
+ **
+ **  PROGRAMMER: Jeff Bayntun
+ **
+ **  NOTES:
+ **  Helper functions
+ *************************************************************************/
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
@@ -13,16 +34,26 @@ import android.widget.Toast;
  */
 public class Helpers {
 
-    /*
-     * Programmer: Jeff Bayntun
+    /*****************************************************************************
+     * Function: makeToast
+     * Date March 5, 2015
+     * Revision:
+     *
      * Designer: Jeff Bayntun
      *
-     * Function: makeToast
+     *Programmer: Jeff Bayntun
      *
+     *Interface: void makeToast(Activity c, String text, int duration)
+     *              Activity c -- Current activity
+     *              String text -- toast text
+     *              int duration -- duration of the toast
+     *
+     *Returns:
+     *         void
      *
      * Notes:
-     *  creates a fancy custom toast
-     */
+     *  Creates a fancy custom toast
+     **************************************************************************/
     public static void makeToast(Activity c, String text, int duration)
     {
         LayoutInflater inflater = LayoutInflater.from(c);
@@ -38,16 +69,26 @@ public class Helpers {
         customtoast.show();
     }
 
-    /*
-     * Programmer: Jeff Bayntun
+    /*****************************************************************************
+     * Function: serviceToast
+     * Date March 5, 2015
+     * Revision:
+     *
      * Designer: Jeff Bayntun
      *
-     * Function: makeToast
+     *Programmer: Jeff Bayntun
      *
+     *Interface: void serviceToast(Context c, String text, int duration)
+     *              Activity c -- Current activity
+     *              String text -- toast text
+     *              int duration -- duration of the toast
+     *
+     *Returns:
+     *         void
      *
      * Notes:
-     *  creates a toast at screen center
-     */
+     *  Creates a toast on the screen.
+     **************************************************************************/
     public static void serviceToast(Context c, String text, int duration)
     {
         Toast t = Toast.makeText(c, text, duration);

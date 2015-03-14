@@ -10,17 +10,17 @@
     <LinearLayout android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/toast_border"
-        android:padding="10dp">
+        android:padding="3dp">
 
         <TextView
             android:id="@+id/toastView"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:padding="10dp"
-            android:radius="4dp"
+            android:radius="2dp"
             android:background="@drawable/toast_body"
             android:text="Android Tutorial Custom Toast"
-            android:textColor="@color/DarkBlue"
+            android:textColor="@color/black"
             android:textSize="20dp"
             android:layout_gravity="center_vertical"/>
 

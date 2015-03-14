@@ -4,19 +4,24 @@
 -- PROGRAM: GPS-Tracker
 --
 -- FUNCTIONS:
---    int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hprevInstance, LPSTR lspszCmdParam, int nCmdShow)
---    LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
+--    Server (int port)
+--    void run()
+--    void addPoint(String message)
+--    String getPoint(String message)
+--    void die(String message)
+--    void main (String [] args)
+--    int getNextDivider(String message, int start)
 --
 -- DATE: March 12, 2015
 --
 -- REVISIONS: Created March 10, Finished March 12, 2015
 --
--- DESIGNER: Aman Abdulla, Michael Chimick
+-- DESIGNER: Michael Chimick
 --
 -- PROGRAMMER: Michael Chimick
 --
 -- NOTES:
--- This server recieves a formatted string, extracts the data, and stores it into an xml file
+-- This server receives a formatted string, extracts the data, and stores it into an xml file
 --
 ----------------------------------------------------------------------------------------------------------------------*/
 
@@ -38,7 +43,7 @@ public class Server extends Thread
     private DatagramPacket dgram;
 
     private static final int DgramSize = 256;
-    private static final int DefaultPort = 7000;
+    private static final int DefaultPort = 8234;
 
     private byte[] PacketData;
     private InetAddress Addr;
@@ -55,6 +60,7 @@ public class Server extends Thread
     -- PROGRAMMER: Michael Chimick
     --
     -- INTERFACE: public Server (int port) throws IOException
+    --                          int port // port the receive on
     --
     -- RETURNS: N/A
     --
@@ -240,7 +246,7 @@ public class Server extends Thread
                "        <time>"      + time + "</time>\n" +
                "        <latitude>"  + lat  + "</latitude>\n" +
                "        <longitude>" + lon  + "</longitude>\n" +
-               "    </user>" +
+               "    </user>\n" +
                "</users>";
     }
 

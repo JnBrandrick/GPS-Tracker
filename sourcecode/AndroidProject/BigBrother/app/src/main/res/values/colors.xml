@@ -5,9 +5,9 @@ Organized by: Willie Tsang
 -->
 <resources>
     <!-- Chimera Project -->
-    <color name="GoodSubmit">#7FFF00</color>
-    <color name="BadSubmit">#E51400</color>
-    <color name="MainBackground">#008B8B</color>
+    <color name="GoodSubmit">#32AB50</color>
+    <color name="BadSubmit">#BD1A1A</color>
+    <color name="MainBackground">#1A425B</color>
     <color name="Titles">#DA70D6</color>
     <color name="TextEdit">#AFEEEE</color>
     <color name="Toasts">#FF8C00</color>

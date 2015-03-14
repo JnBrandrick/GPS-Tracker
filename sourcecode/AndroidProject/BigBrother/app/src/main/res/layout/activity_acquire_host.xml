@@ -10,64 +10,73 @@
     android:background="@color/MainBackground"
     tools:context=".AcquireHost">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Host Name or Address:"
-        android:background="@color/Titles"
-        android:layout_marginBottom="5dp"
-        android:id="@+id/host"
-        style="?android:attr/borderlessButtonStyle"/>
+        <TextView
+            android:gravity="center_horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFF"
+            android:text="Host Name or Address:"
+            android:layout_marginBottom="10dp"
+            android:textSize="25sp"
+            android:id="@+id/host"/>
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:id="@+id/hostEdit"
-        android:background="@color/TextEdit"
-        android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_marginBottom="5dp"/>
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:id="@+id/hostEdit"
+            android:background="@color/TextEdit"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginBottom="35dp"/>
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Port Number:"
-        android:background="@color/Titles"
-        android:id="@+id/port"
-        android:layout_marginBottom="5dp"
-        style="?android:attr/borderlessButtonStyle"/>
+        <TextView
+            android:gravity="center_horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFF"
+            android:textSize="25sp"
+            android:layout_marginBottom="10dp"
+            android:text="Port Number:"
+            android:id="@+id/port"
+            />
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:id="@+id/portEdit"
-        android:background="@color/TextEdit"
-        android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_marginBottom="5dp"/>
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:id="@+id/portEdit"
+            android:background="@color/TextEdit"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginBottom="5dp"/>
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Submit"
-        android:background="@color/BadSubmit"
-        android:id="@+id/submit"
-        android:layout_marginBottom="5dp"
-        android:onClick="submitConnection"
-        />
+        <Button
+            android:layout_marginTop="20dp"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Submit"
+            android:background="@drawable/red_button"
+            android:id="@+id/submit"
+            android:layout_marginBottom="5dp"
+            android:onClick="submitConnection"
+            />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Clear All"
-        android:background="@color/GoodSubmit"
-        android:id="@+id/clear"
-        android:layout_marginBottom="5dp"
-        android:onClick="clearFields"
-        />
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Clear All"
+            android:background="@drawable/blue_button"
+            android:id="@+id/clear"
+            android:layout_marginBottom="5dp"
+            android:onClick="clearFields"
+            />
+
+    </LinearLayout>
 </LinearLayout>
