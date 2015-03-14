@@ -25,25 +25,12 @@
         android:weightSum="2">
 
         <Button
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="View Other"
-            android:background="@color/GoodSubmit"
-            android:id="@+id/switchMap"
-            android:layout_marginBottom="10dp"
-            android:onClick="switchMap"
-            android:layout_marginRight="2dp"
-            />
-
-        <Button
-            android:layout_width="0dp"
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Main Menu"
-            android:background="@color/GoodSubmit"
+            android:background="@drawable/blue_button"
             android:id="@+id/openTracking"
             android:layout_marginBottom="10dp"
             android:onClick="openTracking"

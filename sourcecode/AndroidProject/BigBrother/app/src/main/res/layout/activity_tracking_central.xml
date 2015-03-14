@@ -8,47 +8,43 @@
     android:orientation="vertical"
     tools:context="comteam_chimeragps_tracker.httpsgithub.bigbrother.TrackingCentral">
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Start Tracking"
-        android:background="@color/GoodSubmit"
-        android:id="@+id/toggleTracking"
-        android:layout_marginBottom="10dp"
-        android:onClick="toggleTracking" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Change Server"
-        android:background="@color/GoodSubmit"
-        android:id="@+id/changeServer"
-        android:layout_marginBottom="10dp"
-        android:onClick="changeServer"
-        />
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Start Tracking"
+            android:background="@drawable/blue_button"
+            android:id="@+id/toggleTracking"
+            android:layout_marginBottom="10dp"
+            android:onClick="toggleTracking" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="View My History"
-        android:background="@color/GoodSubmit"
-        android:id="@+id/showMine"
-        android:layout_marginBottom="10dp"
-        android:onClick="showMine"
-        />
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Change Server"
+            android:background="@drawable/blue_button"
+            android:id="@+id/changeServer"
+            android:layout_marginBottom="10dp"
+            android:onClick="changeServer"
+            />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="View All History"
-        android:background="@color/GoodSubmit"
-        android:id="@+id/showAll"
-        android:layout_marginBottom="10dp"
-        android:onClick="showAll"
-        />
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="View Website"
+            android:background="@drawable/blue_button"
+            android:id="@+id/showAll"
+            android:layout_marginBottom="10dp"
+            android:onClick="showAll"
+            />
+    </LinearLayout>
 
 </LinearLayout>

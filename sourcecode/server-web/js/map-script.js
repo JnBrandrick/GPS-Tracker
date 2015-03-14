@@ -1,5 +1,27 @@
+/**********************************************************************
+**  SOURCE FILE:    map-script.js -  Javascript for the map page
+**      
+**  PROGRAM:    Android GPS // Big Brother
+**
+**  FUNCTIONS:
+**
+**
+**  DATE:       February  27th, 2015
+**              
+**
+**  DESIGNER:   Rhea Lauzon A00881688 
+**          
+**
+**  PROGRAMMER: Rhea Lauzon A00881688
+**
+**  NOTES:
+**  Displays the javascript map with various functionality.
+*************************************************************************/
+
 /** Google map **/
 var map;
+
+var geocoder;
 
 /** Array of markers **/
 var markers = new Array();
@@ -7,6 +29,13 @@ var markers = new Array();
 var MY_MAPTYPE_ID = 'custom_style';
 
 
+
+var pin = {
+    url: "../assets/marker.png", // url
+    scaledSize: new google.maps.Size(17, 32), // scaled size
+    origin: new google.maps.Point(0, 0), // origin
+    anchor: new google.maps.Point(17.5, 32) // anchor
+};
 
 
 /*******************************************************************
@@ -388,14 +417,14 @@ function initialize()
   };
 
 
+    //set the styling on the google map
 	map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
-
 	var styledMapOptions = {name: 'Custom Style'};
-
 	var customMapType = new google.maps.StyledMapType(featureOpts, styledMapOptions);
-
   	map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
 
+    //initialize the geocoder
+    geocoder = new google.maps.Geocoder();
 
 
 	// Try to receive the location from HTML
@@ -509,18 +538,143 @@ function loadData()
 
 }
 
+
+/*******************************************************************
+** Function: addMarker
+**
+** Date: February 27th, 2015
+**
+** Revisions: 
+**
+**
+** Designer: Rhea Lauzon
+**
+** Programmer: Rhea Lauzon
+**
+** Interface:
+**          addMarker(name, ip, time, latitude, longitude)
+**              name -- name of the marker
+**              ip -- ip of the person
+**              time -- time of the data
+**              latitude -- latitude of the pin
+**              longitude -- longitude of the pin
+**
+** Returns:
+**          void
+**
+** Notes:
+**  Initializes the google map and centers on user's location.
+**
+**********************************************************************/
 function addMarker(name, ip, time, latitude, longitude)
 {
 	//create the latLng object
 	var location = new google.maps.LatLng(parseFloat(latitude), parseFloat(longitude));
 
-	//make a marker
-    var marker = new google.maps.Marker({ position: location, map: map, title: String(name)});
+    //fetch the address via lat long object
+    getAddress(name, ip, time, latitude, longitude);
+}
 
-    //TO-DO: add info window on click 
-	//var infowindow = new google.maps.InfoWindow({map: map, position: location, content: name + "\n" + time + ip });
 
-	//add the marker to the array
-	markers.push(marker);
+/*******************************************************************
+** Function: getAddress
+**
+** Date: March 13th, 2015
+**
+** Revisions: 
+**
+**
+** Designer: Rhea Lauzon
+**
+** Programmer: Rhea Lauzon
+**
+** Interface:
+**          getAddress(lat, lng)
+**              lat -- the latitude
+**              long -- the longitude
+**
+** Returns:
+**          void
+**
+** Notes:
+**  Fetches the address from the specified location and creates a marker.
+**
+**********************************************************************/
+function getAddress(name, ip, time, lat, lng)
+{
+    //fetch the latitude and longitude as floats
+    var lat = parseFloat(lat);
+    var lng = parseFloat(lng);
+    var location = new google.maps.LatLng(lat, lng);
 
+    geocoder.geocode({'latLng': location}, function(results, status) 
+    {
+        if (status == google.maps.GeocoderStatus.OK) 
+        {
+            if (results[0]) 
+            {
+              createMarker(name, ip, time, location, results[0].formatted_address);
+            }
+        } 
+        else 
+        {
+            return ("Geocoder failed due to: " + status);
+        }
+    });
+}
+
+
+/*******************************************************************
+** Function: createMarker
+**
+** Date: March 13th, 2015
+**
+** Revisions: 
+**
+**
+** Designer: Rhea Lauzon
+**
+** Programmer: Rhea Lauzon
+**
+** Interface:
+**          createMarker(name, ip, time, location, addr)
+**              name -- name of the device
+**              ip -- ip of the device
+**              time -- time of the communication
+**              location - latLng object of the device
+**              addr -- approximate address of the device
+**
+** Returns:
+**          void
+**
+** Notes:
+**  Creates a marker at the device's approximate location.
+**  On hover it displays the address and device information,
+**  When a marker is clicked it zooms to its location.
+**********************************************************************/
+function createMarker(name, ip, time, location, addr)
+{
+    //make a marker
+    var marker = new google.maps.Marker({ position: location, map: map, title: String(name), icon: pin});
+
+    var contentString = "Name: " + name + "<br/>IP: " + ip +  "<br/>Time: " + time + "<br/>Address: " + addr;
+
+    marker['infowindow'] = new google.maps.InfoWindow({content: contentString });
+
+
+    //add a listener to open the info window on hover
+    google.maps.event.addListener(marker, 'mouseover', function() 
+    {
+        this['infowindow'].open(map, this);
+    });
+
+    //add a listener to zoom on click
+    google.maps.event.addListener(marker, 'click', function() 
+    {
+       map.setCenter(new google.maps.LatLng(marker.position.lat(), marker.position.lng())); 
+        map.setZoom(18); 
+    });
+
+    //add the marker to the array
+    markers.push(marker);
 }

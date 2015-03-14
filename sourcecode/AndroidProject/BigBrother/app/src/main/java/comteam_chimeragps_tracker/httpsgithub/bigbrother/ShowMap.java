@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 
 
 public class ShowMap extends ActionBarActivity {
@@ -32,7 +31,7 @@ public class ShowMap extends ActionBarActivity {
     private final String MY_HISTORY = "View My History";
     private final String ALL_HISTORY = "View All History";
 
-    /*
+    /*****************************************************************************
      * Programmer: Jeff Bayntun
      * Designer: Jeff Bayntun
      *
@@ -42,24 +41,20 @@ public class ShowMap extends ActionBarActivity {
      * Notes:
      *  opens browser in this activity, loading page based on which button
      * was selected (boolean in intent)
-     */
+     **************************************************************************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_map);
 
         ALL_PAGE = "http://" + PreferenceHandler.getPreference(this, PreferenceHandler.HOST_PREFERENCE);
-        MY_PAGE = ALL_PAGE + "/" + "myid";
+        MY_PAGE = ALL_PAGE + "/" + "chimera.datacom.me";
 
         // get bundle with info for correct webview
         Intent intent = getIntent();
         all = intent.getExtras().getBoolean("all");
         String url = (all) ? ALL_PAGE: MY_PAGE;
 
-        // set button
-        String text = (all) ? MY_HISTORY: ALL_HISTORY;
-        Button button = (Button)findViewById(R.id.switchMap);
-        button.setText(text);
 
         //open that webview
         web = (WebView) findViewById(R.id.webView);
@@ -108,27 +103,6 @@ public class ShowMap extends ActionBarActivity {
         startActivity(myIntent);
     }
 
-    /*
-    * Programmer: Jeff Bayntun
-    * Designer: Jeff Bayntun
-    *
-    * Function: onCreate
-    *
-    *
-    * Notes:
-    *  toggles website displayed
-    */
-    public void switchMap(View view)
-    {
-        all = !all;
-
-        String text = (all) ? MY_HISTORY: ALL_HISTORY;
-        Button button = (Button)findViewById(R.id.switchMap);
-        button.setText(text);
-
-        String url = (all) ? ALL_PAGE: MY_PAGE;
-        open(url);
-    }
 
     public void open(String url) {
         web.getSettings().setLoadsImagesAutomatically(true);

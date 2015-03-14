@@ -179,7 +179,7 @@ public class TrackingService extends Service {
             Date myDate;
             @Override
             /*
-            * Programmer: Jeff Bayntun
+            * Programmer: Jeff Bayntun & Rhea Lauzon
             * Designer: Jeff Bayntun
             *
             * Function: onLocationChanged

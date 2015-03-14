@@ -1,3 +1,23 @@
+/**********************************************************************
+**  SOURCE FILE:   home-script.js -  Javascript for the home page
+**      
+**  PROGRAM:    Android GPS // Big Brother
+**
+**  FUNCTIONS:
+**
+**
+**  DATE:       February  27th, 2015
+**              
+**
+**  DESIGNER:   Rhea Lauzon A00881688 
+**          
+**
+**  PROGRAMMER: Rhea Lauzon A00881688
+**
+**  NOTES:
+**  Displays the information from data in a table
+*************************************************************************/
+
 /*******************************************************************
 ** Function: $(document).ready()
 **
@@ -97,6 +117,29 @@ function loadData()
 
 }
 
+
+/*******************************************************************
+** Function: addToTable
+**
+** Date: March 1st, 2015
+**
+** Revisions: 
+**
+**
+** Designer: Rhea Lauzon
+**
+** Programmer: Rhea Lauzon
+**
+** Interface:
+**			addToTable(name, ip, time, latitude, longitude)
+**
+** Returns:
+**			void
+**
+** Notes:
+**	Adds the data to the page in a table format
+**
+**********************************************************************/
 function addToTable(name, ip, time, latitude, longitude)
 {
 	//add the user to the table

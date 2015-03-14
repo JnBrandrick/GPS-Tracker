@@ -194,13 +194,13 @@ public class AcquireHost extends ActionBarActivity {
                 && p.getText().toString().trim().length() > 0)
         {
             //set color green
-            submit.setBackgroundColor(getResources().getColor(R.color.GoodSubmit));
+            submit.setBackgroundResource(R.drawable.blue_button);
             return true;
         }
         else
         {
             // set color red
-            submit.setBackgroundColor(getResources().getColor(R.color.BadSubmit));
+            submit.setBackgroundResource(R.drawable.red_button);
             return false;
         }
     }
