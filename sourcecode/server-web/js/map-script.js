@@ -563,7 +563,7 @@ function loadData()
 **          void
 **
 ** Notes:
-**  Initializes the google map and centers on user's location.
+**  Fetches the address of the marker and adds it
 **
 **********************************************************************/
 function addMarker(name, ip, time, latitude, longitude)

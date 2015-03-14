@@ -246,7 +246,7 @@ public class Server extends Thread
                "        <time>"      + time + "</time>\n" +
                "        <latitude>"  + lat  + "</latitude>\n" +
                "        <longitude>" + lon  + "</longitude>\n" +
-               "    </user>" +
+               "    </user>\n" +
                "</users>";
     }
 
