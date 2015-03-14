@@ -27,7 +27,11 @@ import android.os.Process;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 
 public class TrackingService extends Service {
@@ -188,9 +192,15 @@ public class TrackingService extends Service {
             public void onLocationChanged(Location location) {
                 // Initialize the location fields
                 mLocation = location;
-                //time = location.getTime();
+                time = location.getTime();
 
-                sendLocation(mLocation, "hahahaha");
+                //Retrieve current time
+                Calendar cal = Calendar.getInstance();
+
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                dateFormat.setTimeZone(TimeZone.getTimeZone("Canada/Pacific"));
+
+                sendLocation(mLocation, dateFormat.format(cal.getTime()));
 
             }
 

@@ -1,30 +1,8 @@
 <users>
-    <user>
-        <name>13232</name>
-        <ip>192.168.121</ip>
-        <time>5:22:36PM</time>
-        <latitude>49.2827</latitude>
-        <longitude>-123.1207</longitude>
-    </user>
-    <user>
-        <name>14343</name>
-        <ip>192.168.127</ip>
-        <time>5:44:36PM</time>
-        <latitude>49.233888</latitude>
-        <longitude>-124.805549</longitude>
-    </user>
-        <user>
-        <name>14343</name>
-        <ip>192.168.127</ip>
-        <time>5:44:36PM</time>
-        <latitude>59.233888</latitude>
-        <longitude>-124.805549</longitude>
-    </user> 
-        <user>
-        <name>14343</name>
-        <ip>192.168.127</ip>
-        <time>5:44:36PM</time>
-        <latitude>49.233888</latitude>
-        <longitude>-127.805549</longitude>
-    </user>     
-</users>
+ <user>
+        <name>f9d2258d534ac28e</name>
+        <ip>192.168.1.8</ip>
+        <time>2015/03/13 17:24:50</time>
+        <latitude>49.21520009</latitude>
+        <longitude>-122.95533078</longitude>
+    </user></users>
