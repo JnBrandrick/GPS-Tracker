@@ -1,15 +1,33 @@
 package comteam_chimeragps_tracker.httpsgithub.bigbrother;
-/*
-        Date:       March 4, 2014
-        Activity:   Tracking Central
-        Designer:   Jeff Bayntun
-        Programmer:  Jeff Bayntun
 
-        Description: This Activity Lets a user turn tracking on or off and also has
-        lets a user change the server go to the ShowMap Activity or the AcquireHost
-        activity.
-
- */
+/**********************************************************************
+ **  SOURCE FILE:  TrackingCentral.java -  Java file for the central tracking
+ **
+ **  PROGRAM:    Android GPS // Big Brother
+ **
+ **  FUNCTIONS:
+ **             boolean onOptionsItemSelected(MenuItem item)
+ **             boolean onCreateOptionsMenu(Menu menu)
+ **             void onCreate(Bundle savedInstanceState)
+ **             void showAll(View view)
+ **             void toggleTracking(View view)
+ **             void changeServer(View view)
+ **
+ **
+ **
+ **  DATE:      March 4, 2014
+ **
+ **
+ **  DESIGNER:    Jeff Bayntun
+ **
+ **
+ **  PROGRAMMER: Jeff Bayntun
+ **
+ **  NOTES:
+ ** This Activity Lets a user turn tracking on or off and also has
+ lets a user change the server go to the ShowMap Activity or the AcquireHost
+ activity.
+ *************************************************************************/
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,22 +38,30 @@ import android.view.View;
 import android.widget.Button;
 
 
-public class TrackingCentral extends ActionBarActivity {
+public class TrackingCentral extends ActionBarActivity
+{
 
     boolean tracking;
     private final String START_TRACKING = "Start Tracking";
     private final String STOP_TRACKING = "Stop Tracking";
-    /*
-    * Programmer: Jeff Bayntun
-    * Designer: Jeff Bayntun
-    *
-    * Function: onCreate
-    *
-    *
-    * Notes:
-    *  creates tracking activity
-    */
-    @Override
+
+    /*****************************************************************************
+     * Function: onCreate
+     * Date March 4, 2015
+     * Revision:
+     *
+     * Designer: Jeff Bayntun
+     *
+     *Programmer: Jeff Bayntun
+     *
+     *Interface: void onCreate(Bundle savedInstanceState)
+     *              Bundle savedInstanceState -- state before last close
+     *Returns:
+     *         void
+     *
+     * Notes:
+     * Creates the tracking activity
+     **************************************************************************/
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking_central);
@@ -50,6 +76,24 @@ public class TrackingCentral extends ActionBarActivity {
     }
 
 
+    /*****************************************************************************
+     * Function: onCreateOptionsMenu
+     * Date March 4, 2015
+     * Revision:
+     *
+     * Designer: Jeff Bayntun
+     *
+     *Programmer: Jeff Bayntun
+     *
+     *Interface: boolean onCreateOptionsMenu(Menu menu)
+     *              Menu menu -- Menu bar
+     *
+     * Returns:
+     *          bool -- inflate fail or success
+     *
+     * Notes:
+     *  Creates the options menu bar
+     **************************************************************************/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -57,6 +101,25 @@ public class TrackingCentral extends ActionBarActivity {
         return true;
     }
 
+
+    /*****************************************************************************
+     * Function: onOptionsItemSelected
+     * Date March 4, 2015
+     * Revision:
+     *
+     * Designer: Jeff Bayntun
+     *
+     *Programmer: Jeff Bayntun
+     *
+     *Interface: boolean  onOptionsItemSelected(MenuItem item)
+     *              MenuItem item -- Item selected in the menu
+     *
+     * Returns:
+     *          bool -- inflate fail or success
+     *
+     * Notes:
+     *  onClick method for any of the menu bar items
+     **************************************************************************/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -72,16 +135,25 @@ public class TrackingCentral extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*
-    * Programmer: Jeff Bayntun
-    * Designer: Jeff Bayntun
-    *
-    * Function: toggleTracking
-    *
-    *
-    * Notes:
-    *  starts or stops tracking service
-    */
+
+    /*****************************************************************************
+     * Function: toggleTracking
+     * Date March 4, 2015
+     * Revision:
+     *
+     * Designer: Jeff Bayntun
+     *
+     *Programmer: Jeff Bayntun
+     *
+     *Interface: void toggleTracking(View v)
+     *          View view -- calling view
+     *
+     * Returns:
+     *          void
+     *
+     * Notes:
+     * starts or stops tracking service
+     **************************************************************************/
     public void toggleTracking(View view)
     {
         // start or stop tracking
@@ -107,16 +179,25 @@ public class TrackingCentral extends ActionBarActivity {
         toggle.setText(t);
     }
 
-    /*
-    * Programmer: Jeff Bayntun
-    * Designer: Jeff Bayntun
-    *
-    * Function: changeServer
-    *
-    *
-    * Notes:
-    *  opens AcquireHost activity
-    */
+
+    /*****************************************************************************
+     * Function: changeServer
+     * Date March 4, 2015
+     * Revision:
+     *
+     * Designer: Jeff Bayntun
+     *
+     *Programmer: Jeff Bayntun
+     *
+     *Interface: void changeServer(View v)
+     *          View view -- calling view
+     *
+     * Returns:
+     *          void
+     *
+     * Notes:
+     * opens AcquireHost activity
+     **************************************************************************/
     public void changeServer(View view)
     {
         // go back to AcquireHost activity
@@ -129,34 +210,25 @@ public class TrackingCentral extends ActionBarActivity {
         finish();
     }
 
-    /*
-    * Programmer: Jeff Bayntun
-    * Designer: Jeff Bayntun
-    *
-    * Function: showMine
-    *
-    *
-    * Notes:
-    *  loads Page for this users history
-    */
-    public void showMine(View view)
-    {
-        // open in-app browser activity to show this users results
-        Intent myIntent = new Intent(this,ShowMap.class);
-        myIntent.putExtra("all", false);
-        startActivity(myIntent);
-    }
 
-    /*
-    * Programmer: Jeff Bayntun
-    * Designer: Jeff Bayntun
-    *
-    * Function: showMine
-    *
-    *
-    * Notes:
-    *  loads Page all histories
-    */
+    /*****************************************************************************
+     * Function: showAll
+     * Date March 4, 2015
+     * Revision:
+     *
+     * Designer: Jeff Bayntun
+     *
+     *Programmer: Jeff Bayntun
+     *
+     *Interface: void showAll(View view)
+     *          View view -- calling view
+     *
+     * Returns:
+     *          void
+     *
+     * Notes:
+     * Load the website
+     **************************************************************************/
     public void showAll(View view)
     {
         // open in-app browser activity to show all users results

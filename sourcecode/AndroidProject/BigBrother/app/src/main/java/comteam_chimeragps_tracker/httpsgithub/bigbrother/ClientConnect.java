@@ -1,5 +1,33 @@
 package comteam_chimeragps_tracker.httpsgithub.bigbrother;
 
+/**********************************************************************
+ **  SOURCE FILE: ClientConnect.java -  UDP backend of the app
+ **
+ **  PROGRAM:    Android GPS // Big Brother
+ **
+ **  FUNCTIONS:
+ **             ClientConnect(Context appContext)
+ **             void initSocket()
+ **             void setLocalIP()
+ **             void setPacketData(String time, String latitude, String longitude)
+ **             void run()
+ **             void teardown()
+ **             boolean foundServer()
+ **             String doInBackground(Void... params)
+ **             void onPostExecute(String result)
+ **
+ **  DATE:      March 5, 2014
+ **
+ **
+ **  DESIGNER:    Julian Brandrick
+ **
+ **
+ **  PROGRAMMER: Julian Brandrick
+ **
+ **  NOTES:
+ **  Intiailizes the connection to the server
+ *************************************************************************/
+
 import android.app.Activity;
 import android.content.Context;
 import android.net.wifi.WifiInfo;
@@ -20,16 +48,22 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-/*
-        Date:       March 7, 2014
-        Class:   ClientConnect implements Runnable
-        Designer:   Julian Brandrick
-        Programmer:  Julian Brandrick
 
-        Description: The responsibility of this class is to create, send on and teardown a UDP
-        Socket. Its run method will take the packetData variable and send it to the specified
-        server. The send state is done in a separate runnable thread.
- */
+/*****************************************************************************
+ * Class:   ClientConnect implements Runnable
+ * Date March 7, 2015
+ * Revision:
+ *
+ * Designer: Julian Brandrick
+ *
+ *Programmer: Julian Brandrick
+ *
+ *
+ * Notes:
+ * The responsibility of this class is to create, send on and teardown a UDP
+ Socket. Its run method will take the packetData variable and send it to the specified
+ server. The send state is done in a separate runnable thread.
+ **************************************************************************/
 public class ClientConnect implements Runnable {
     private static final int  DGRAM_SIZE = 256;
     private static final char DELIM      = '|';
@@ -43,36 +77,56 @@ public class ClientConnect implements Runnable {
     private String packetData;
     private int    port;
 
-    /*
-     * Programmer: Julian Brandrick
+
+
+    /*****************************************************************************
+     * Function:   clientConnect
+     * Date March 7, 2015
+     * Revision:
+     *
      * Designer: Julian Brandrick
      *
-     * Constructor: public ClientConnect (Context)
-     * 
+     *Programmer: Julian Brandrick
+     *
+     *Interface: public ClientConnect (Contex appContext)
+     *           Context appContext -- Application
+     *Returns:
+     *       N/A (Constructor)
+     *
      * Notes:
      *  Initializes the context and deviceID.
-     */
+     **************************************************************************/
     public ClientConnect(Context appContext) {
         context = appContext;
         deviceID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
-    /*
-     * Programmer: Julian Brandrick
+
+
+
+    /*****************************************************************************
+     * Function:   initSocket
+     * Date March 7, 2015
+     * Revision:
+     *
      * Designer: Julian Brandrick
      *
-     * Function: private initSocket (void)
-     * 
-     * Throws:  SocketException       -> Socket could not be initialized.
+     *Programmer: Julian Brandrick
+     *
+     *Interface:  void initSocket()
+     *
+     *
+     *Throws:  SocketException       -> Socket could not be initialized.
      *          UnknownHostException  -> Host name could not be found.
      *          NumberFormatException -> Port was not a number.
-     * 
-     * Return: void
-     * 
+     *
+     *Returns:
+     *        void
+     *
      * Notes:
-     *  Pulls the host name and port number from the PreferenceHandler, instantiates a 
+     *   Pulls the host name and port number from the PreferenceHandler, instantiates a
      *  UDP socket and gets the IP address of the given host name.
-     */
+     **************************************************************************/
     private void initSocket() throws SocketException, UnknownHostException, NumberFormatException {
         String[] preferences = PreferenceHandler.checkPreferences(context);
 
@@ -83,17 +137,27 @@ public class ClientConnect implements Runnable {
         iAddr = InetAddress.getByName(host);
     }
 
-    /*
-     * Programmer: Julian Brandrick
-     * Designer: CYB (StackOverflow user name)
+
+
+
+    /*****************************************************************************
+     * Function: setLocalIP
+     * Date March 7, 2015
+     * Revision:
      *
-     * Function: private setLocalIP (void)
-     * 
-     * Return: void
-     * 
+     *Designer: CYB (StackOverflow user name)
+     *
+     *Programmer: Julian Brandrick
+     *
+     *Interface:  void setLocalIP()
+     *
+     *
+     *Returns:
+     *        void
+     *
      * Notes:
-     *  Finds the IP of the current device and stores it in dotted decimal notation.
-     */
+     * Finds the IP of the current device and stores it in dotted decimal notation.
+     **************************************************************************/
     private void setLocalIP()
     {
         WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
@@ -102,37 +166,56 @@ public class ClientConnect implements Runnable {
         localIP = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
     }
 
-    /*
-     * Programmer: Julian Brandrick
-     * Designer: Julian Brandrick
+
+    /*****************************************************************************
+     * Function: setPacketData
+     * Date March 7, 2015
+     * Revision:
      *
-     * Function: setPacketData (String)
-     * 
-     * Return: void
-     * 
+     *Designer: Julian Brandrick
+     *
+     *Programmer: Julian Brandrick
+     *
+     *Interface:  void setPacketData(String time, String latitude, String longitude)
+     *              String time -- time the device is sending at
+     *              String latitude -- Latitude of device
+     *              String longitude -- Longitude of device
+     *
+     *
+     *Returns:
+     *        void
+     *
      * Notes:
      *  Sets the packet data to be sent to the server.
      *  The format is:
      *      name|local ip|time|latitude|longitude|
-     */
+     **************************************************************************/
     public void setPacketData(String time, String latitude, String longitude)
     {
         packetData = deviceID + DELIM + localIP + DELIM + time + DELIM + latitude + DELIM + longitude + DELIM;
     }
 
-    /*
-     * Programmer: Julian Brandrick
-     * Designer: Julian Brandrick
+
+
+    /*****************************************************************************
+     * Function: run
+     * Date March 7, 2015
+     * Revision:
      *
-     * Function: public run (void)
-     * 
-     * Return: void
-     * 
+     *Designer: Julian Brandrick
+     *
+     *Programmer: Julian Brandrick
+     *
+     *Interface:  void run()
+     *
+     *
+     *Returns:
+     *        void
+     *
      * Notes:
-     *  Sends the data to the server in a datagram via UDP.
+     * Sends the data to the server in a datagram via UDP.
      *  This is accomplished in a separate thread.
-     *  
-     */
+     **************************************************************************/
     public void run()
     {
         byte[] data = new byte[DGRAM_SIZE];
@@ -151,36 +234,53 @@ public class ClientConnect implements Runnable {
         }
     }
 
-    /*
-     * Programmer: Julian Brandrick
+
+
+    /*****************************************************************************
+     * Function:   teardown
+     * Date March 7, 2015
+     *
+     * Revision:
+     *
      * Designer: Julian Brandrick
      *
-     * Function: teardown (void)
-     * 
-     * Return: void
-     * 
+     *Programmer: Julian Brandrick
+     *
+     *Interface: void teardown()
+     *
+     *Returns:
+     *      void
+     *
      * Notes:
      *  Closes the datagram socket.
-     */
+     **************************************************************************/
     public void teardown()
     {
         dgramSocket.close();
     }
 
-    /*
-     * Programmer: Julian Brandrick
+
+    /*****************************************************************************
+     * Function:  foundServer
+     * Date March 7, 2015
+     *
+     * Revision:
+     *
      * Designer: Julian Brandrick
      *
-     * Function: public foundServer (void)
-     * 
-     * Return: boolean
+     *Programmer: Julian Brandrick
+     *
+     *Interface: boolean foundServer()
+     *
+     *Returns:
+     *      boolean
      *      true  -> Asynchronous task was uninterrupted and the UDP socket was created
      *      false -> Any exceptions occurred during execution
-     * 
+     *
      * Notes:
      *  Runs the AsyncLookup class and gets the output of its doInBackground method. If the task
      *  was successful, the returned String will be empty. Else it will contain an error message.
-     */
+     *******************************************************************************************/
     public boolean foundServer()
     {
         try
@@ -210,19 +310,49 @@ public class ClientConnect implements Runnable {
             return false;
         }
     }
-    
-    /*
-        Date:       March 7, 2014
-        AsyncTask:   AsyncLookup
-        Designer:   Julian Brandrick
-        Programmer:  Julian Brandrick
 
-        Description: This class creates a UDP socket in a background thread and displays any
-        exceptions it catches to the user.
-    */
+
+
+    /*****************************************************************************
+     * Class: AsyncLookup
+     * Date March 7, 2015
+     *
+     * Revision:
+     *
+     * Designer: Julian Brandrick
+     *
+     *Programmer: Julian Brandrick
+     *
+     *
+     * Notes:
+     *  This class creates a UDP socket in a background thread and displays any
+     * exceptions it catches to the user.
+     **************************************************************************/
     private class AsyncLookup extends AsyncTask<Void, Void, String>
     {
 
+
+
+
+        /*****************************************************************************
+         * Function:  doInBackground
+         * Date March 7, 2015
+         *
+         * Revision:
+         *
+         * Designer: Julian Brandrick
+         *
+         *Programmer: Julian Brandrick
+         *
+         *Interface: String doInBackground(Void... params)
+         *            params -- List of parameters
+         *
+         *Returns:
+         *     String
+         *
+         * Notes:
+         *  Do in background functionality of the connection
+         *******************************************************************************************/
         @Override
         protected String doInBackground(Void... params) {
             try
@@ -247,6 +377,27 @@ public class ClientConnect implements Runnable {
             return "";
         }
 
+
+        /*****************************************************************************
+         * Function:  onPostExecute
+         * Date March 7, 2015
+         *
+         * Revision:
+         *
+         * Designer: Julian Brandrick
+         *
+         *Programmer: Julian Brandrick
+         *
+         *Interface: void onPostExecute(String result)
+         *              String result -- Result of the background service
+         *
+         *
+         *Returns:
+         *     String
+         *
+         * Notes:
+         * Occurs after the execution of the service.
+         *******************************************************************************************/
         @Override
         protected void onPostExecute(String result)
         {

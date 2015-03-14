@@ -1,14 +1,32 @@
 package comteam_chimeragps_tracker.httpsgithub.bigbrother;
-/*
-        Date:       March 4, 2014
-        Activity:   ShowMap
-        Designer:   Jeff Bayntun
-        Programmer:  Jeff Bayntun
-
-        Description: This Activity Loads a web page to show either this users
-        progress or all users progress.
-
- */
+/**********************************************************************
+ **  SOURCE FILE:  ShowMap.java -  Java file for the map screen
+ **
+ **  PROGRAM:    Android GPS // Big Brother
+ **
+ **  FUNCTIONS:
+ **             void open(String url)
+ **             boolean shouldOverrideUrlLoading(WebView view, String url)
+ **             void openTracking(View view)
+ **             boolean onOptionsItemSelected(MenuItem item)
+ **             boolean onCreateOptionsMenu(Menu menu)
+ **             void onCreate(Bundle savedInstanceState)
+ **             boolean shouldOverrideUrlLoading(WebView view, String url)
+ **
+ **
+ **
+ **  DATE:      March 4, 2014
+ **
+ **
+ **  DESIGNER:    Jeff Bayntun
+ **
+ **
+ **  PROGRAMMER: Jeff Bayntun
+ **
+ **  NOTES:
+ **  This Activity Loads a web page to show either this users
+ progress or all users progress.
+ *************************************************************************/
 
 
 import android.content.Intent;
@@ -32,11 +50,18 @@ public class ShowMap extends ActionBarActivity {
     private final String ALL_HISTORY = "View All History";
 
     /*****************************************************************************
-     * Programmer: Jeff Bayntun
+     * Function: onCreate
+     * Date March 4, 2015
+     * Revision:
+     *
      * Designer: Jeff Bayntun
      *
-     * Function: onCreate
+     *Programmer: Jeff Bayntun
      *
+     *Interface: void onCreate(Bundle savedInstanceState)
+     *              Bundle savedInstanceState -- state before last close
+     *Returns:
+     *         void
      *
      * Notes:
      *  opens browser in this activity, loading page based on which button
@@ -64,6 +89,24 @@ public class ShowMap extends ActionBarActivity {
     }
 
 
+    /*****************************************************************************
+     * Function: onCreateOptionsMenu
+     * Date March 4, 2015
+     * Revision:
+     *
+     * Designer: Jeff Bayntun
+     *
+     *Programmer: Jeff Bayntun
+     *
+     *Interface: boolean onCreateOptionsMenu(Menu menu)
+     *              Menu menu -- Menu bar
+     *
+     * Returns:
+     *          bool -- inflate fail or success
+     *
+     * Notes:
+     *  Creates the options menu bar
+     **************************************************************************/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -71,6 +114,25 @@ public class ShowMap extends ActionBarActivity {
         return true;
     }
 
+
+    /*****************************************************************************
+     * Function: onOptionsItemSelected
+     * Date March 4, 2015
+     * Revision:
+     *
+     * Designer: Jeff Bayntun
+     *
+     *Programmer: Jeff Bayntun
+     *
+     *Interface: boolean  onOptionsItemSelected(MenuItem item)
+     *              MenuItem item -- Item selected in the menu
+     *
+     * Returns:
+     *          bool -- inflate fail or success
+     *
+     * Notes:
+     *  onClick method for any of the menu bar items
+     **************************************************************************/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -86,16 +148,24 @@ public class ShowMap extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*
-    * Programmer: Jeff Bayntun
-    * Designer: Jeff Bayntun
-    *
-    * Function: openTracking
-    *
-    *
-    * Notes:
-    *  return to tracking activity
-    */
+    /*****************************************************************************
+     * Function: openTracking
+     * Date March 4, 2015
+     * Revision:
+     *
+     * Designer: Jeff Bayntun
+     *
+     *Programmer: Jeff Bayntun
+     *
+     *Interface:  void openTracking(View view)
+     *             View view -- Calling view
+     *
+     * Returns:
+     *          void
+     *
+     * Notes:
+     *  onClick method for any of the menu bar items
+     **************************************************************************/
     public void openTracking(View view)
     {
         // open in-app browser activity to show this users results
@@ -104,6 +174,24 @@ public class ShowMap extends ActionBarActivity {
     }
 
 
+    /*****************************************************************************
+     * Function: open
+     * Date March 4, 2015
+     * Revision:
+     *
+     * Designer: Jeff Bayntun
+     *
+     *Programmer: Jeff Bayntun
+     *
+     *Interface:  void open(String url)
+     *             String url -- website URL
+     *
+     * Returns:
+     *          void
+     *
+     * Notes:
+     *  opens the specified webpage in the web view
+     **************************************************************************/
     public void open(String url) {
         web.getSettings().setLoadsImagesAutomatically(true);
         web.getSettings().setJavaScriptEnabled(true);
@@ -111,7 +199,29 @@ public class ShowMap extends ActionBarActivity {
         web.loadUrl(url);
     }
 
-    private class MyBrowser extends WebViewClient {
+
+    private class MyBrowser extends WebViewClient
+    {
+
+        /*****************************************************************************
+         * Function: shouldOverrideUrlLoading
+         * Date March 4, 2015
+         * Revision:
+         *
+         * Designer: Jeff Bayntun
+         *
+         *Programmer: Jeff Bayntun
+         *
+         *Interface:  boolean shouldOverrideUrlLoading(WebView view, String url)
+         *             WebView view -- Webview to load a page
+         *             String url -- URL to laod in the view
+         *
+         * Returns:
+         *          boolean -- True or false on the loading
+         *
+         * Notes:
+         *  Opens the URL in the webview
+         **************************************************************************/
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);

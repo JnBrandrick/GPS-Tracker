@@ -1,15 +1,37 @@
 package comteam_chimeragps_tracker.httpsgithub.bigbrother;
-/*
-        Date:       March 4, 2014
-        Activity:   Tracking Central
-        Designer:   Jeff Bayntun with example code from developer.android.com
-        Programmer:  Jeff Bayntun
+/**********************************************************************
+ **  SOURCE FILE:  TrackingService.java -  Java file for the GPS service
+ **
+ **  PROGRAM:    Android GPS // Big Brother
+ **
+ **  FUNCTIONS:
+ **             void onCreate(Bundle savedInstanceState)
+ **             void onProviderDisabled(String provider)
+ **             void onProviderEnabled(String provider)
+ **             void onStatusChanged(String provider, int status, Bundle extras)
+ **             void onLocationChanged(Location location)
+ **             void sendLocation (Location l, String time)
+ **             void handleMessage(Message msg)
+ **             void onDestroy()
+ **             IBinder onBind(Intent intent)
+ **             int onStartCommand(Intent intent, int flags, int startId)
+ **
+ **
+ **
+ **  DATE:      March 4, 2014
+ **
+ **
+ **  DESIGNER:    Jeff Bayntun with example code from developer.android.com
+ **
+ **
+ **  PROGRAMMER: Jeff Bayntun
+ **
+ **  NOTES:
+ ** This Activity Lets a user turn tracking on or off and also has
+ lets a user change the server go to the ShowMap Activity or the AcquireHost
+ activity.
+ *************************************************************************/
 
-        Description: This Activity Lets a user turn tracking on or off and also has
-        lets a user change the server go to the ShowMap Activity or the AcquireHost
-        activity.
-
- */
 
 import android.app.Service;
 import android.content.Context;
@@ -34,7 +56,8 @@ import java.util.Date;
 import java.util.TimeZone;
 
 
-public class TrackingService extends Service {
+public class TrackingService extends Service
+{
     private ClientConnect clientNet;
     
     private Looper mServiceLooper;
@@ -46,17 +69,24 @@ public class TrackingService extends Service {
 
     private final long INTERVAL = 15 * 60 * 1000; // every 15 minutes
     private final float DISTANCE = 500; // every 500m
-    /*
-    * Programmer: Jeff Bayntun
-    * Designer: Jeff Bayntun
-    *
-    * Function: onCreate
-    *
-    *
-    * Notes:
-    *  creates the tracking service, starts a thread to handle location finding.
-    *
-    */
+
+    /*****************************************************************************
+     * Function: onCreate
+     * Date March 4, 2015
+     * Revision:
+     *
+     * Designer: Jeff Bayntun
+     *
+     *Programmer: Jeff Bayntun
+     *
+     *Interface: void onCreate(Bundle savedInstanceState)
+     *              Bundle savedInstanceState -- state before last close
+     *Returns:
+     *         void
+     *
+     * Notes:
+     *  creates the tracking service, starts a thread to handle location finding.
+     **************************************************************************/
     @Override
     public void onCreate()
     {
@@ -77,6 +107,26 @@ public class TrackingService extends Service {
         clientNet.foundServer();
     }
 
+
+    /*****************************************************************************
+     * Function: onStartCommand
+     * Date March 4, 2015
+     * Revision:
+     *
+     * Designer: Jeff Bayntun
+     *
+     *Programmer: Jeff Bayntun
+     *
+     *Interface: int onStartCommand(Intent intent, int flags, int startId)
+     *             Intent intent -- Intent from the starter
+     *             int flags -- Flags for the service
+     *             int startId -- Which request we're stopping when we finish
+     *Returns:
+     *         int -- value for restarting
+     *
+     * Notes:
+     *  starts the service when issued the command.
+     **************************************************************************/
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Helpers.serviceToast(this, "service starting", Toast.LENGTH_SHORT);
@@ -91,23 +141,48 @@ public class TrackingService extends Service {
         return START_STICKY;
     }
 
+
+    /*****************************************************************************
+     * Function: onBind
+     * Date March 4, 2015
+     * Revision:
+     *
+     * Designer: Jeff Bayntun
+     *
+     *Programmer: Jeff Bayntun
+     *
+     *Interface: IBinder onBind(Intent intent)
+     *              Intent intent -- Intent to bind on
+     *Returns:
+     *         IBinder -- null in this scenario (overriding purposes)
+     *
+     * Notes:
+     *  Mandatory for services. We are not using this.
+     **************************************************************************/
     @Override
-    public IBinder onBind(Intent intent) {
+    public IBinder onBind(Intent intent)
+    {
         // We don't provide binding, so return null
         return null;
     }
 
-    /*
-    * Programmer: Jeff Bayntun
-    * Designer: Jeff Bayntun
-    *
-    * Function: onDestroy
-    *
-    *
-    * Notes:
-    *  destroys service. stops thread and unregisters from the location manager.
-    *
-    */
+
+    /*****************************************************************************
+     * Function: onDestroy
+     * Date March 4, 2015
+     * Revision:
+     *
+     * Designer: Jeff Bayntun
+     *
+     *Programmer: Jeff Bayntun
+     *
+     *Interface: void onDestroy()
+     *Returns:
+     *         void
+     *
+     * Notes:
+     *  destroys service. stops thread and unregisters from the location manager.
+     **************************************************************************/
     @Override
     public void onDestroy() {
         quit = true;
@@ -133,18 +208,26 @@ public class TrackingService extends Service {
         public ServiceHandler(Looper looper) {
             super(looper);
         }
-        /*
-    * Programmer: Jeff Bayntun
-    * Designer: Jeff Bayntun
-    *
-    * Function: handleMessage
-    *
-    *
-    * Notes:
-    *  creates location manager and listener for location changes.
-    *  whenever location listener is invoked, sendLocation is called
-    *
-    */
+
+        /***********************************************************************
+         * Function: handleMessage
+         * Date March 4, 2015
+         * Revision:
+         *
+         * Designer: Jeff Bayntun
+         *
+         *Programmer: Jeff Bayntun
+         *
+         *Interface: void handleMessage(Message msg)
+         *              Message msg -- Message received from the service
+         *
+         *Returns:
+         *         void
+         *
+         * Notes:
+         *  creates location manager and listener for location changes.
+         *  whenever location listener is invoked, sendLocation is called
+         **************************************************************************/
         @Override
         public void handleMessage(Message msg)
         {
@@ -162,7 +245,25 @@ public class TrackingService extends Service {
             }
         }
 
-        // Send goes here
+        /***********************************************************************
+         * Function: sendLocation
+         * Date March 4, 2015
+         * Revision:
+         *
+         * Designer: Jeff Bayntun
+         *
+         *Programmer: Jeff Bayntun
+         *
+         *Interface: void sendLocation (Location l, String time)
+         *              location l -- location data
+         *              String time -- time data
+         *
+         *Returns:
+         *         void
+         *
+         * Notes:
+         * Sends the location to the the client
+         ***************************************************************************/
         private void sendLocation (Location l, String time)
         {
             Log.d("Latitude", String.valueOf(l.getLatitude()) );
@@ -177,18 +278,26 @@ public class TrackingService extends Service {
         {
             Long time;
             Date myDate;
+
+            /***********************************************************************
+             * Function: onLocationChanged
+             * Date March 4, 2015
+             * Revision:
+             *
+             * Designer: Jeff Bayntun
+             *
+             *Programmer: Jeff Bayntun & Rhea Lauzon
+             *
+             *Interface: void onLocationChanged(Location location)
+             *             Location location -- new location
+             *
+             *Returns:
+             *         void
+             *
+             * Notes:
+             *  Gets current location, calls sendLocations.
+             **************************************************************************/
             @Override
-            /*
-            * Programmer: Jeff Bayntun & Rhea Lauzon
-            * Designer: Jeff Bayntun
-            *
-            * Function: onLocationChanged
-            *
-            *
-            * Notes:
-            *  gets current location, calls sendLocation
-            *
-            */
             public void onLocationChanged(Location location) {
                 // Initialize the location fields
                 mLocation = location;
@@ -204,18 +313,77 @@ public class TrackingService extends Service {
 
             }
 
+
+            /***********************************************************************
+             * Function: onStatusChanged
+             * Date March 4, 2015
+             * Revision:
+             *
+             * Designer: Jeff Bayntun
+             *
+             *Programmer: Jeff Bayntun & Rhea Lauzon
+             *
+             *Interface: void onStatusChanged(String provider, int status, Bundle extras)
+             *           String provider -- The provider that has changed
+             *           int status -- new status
+             *           Bundle extras -- extras with the status changed
+             *
+             *Returns:
+             *         void
+             *
+             * Notes:
+             *  Occurs when the status of the service has changed
+             **************************************************************************/
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras)
             {
                 Log.d(provider, ""+ status);
             }
 
+
+            /***********************************************************************
+             * Function: onProviderEnabled
+             * Date March 4, 2015
+             * Revision:
+             *
+             * Designer: Jeff Bayntun
+             *
+             *Programmer: Jeff Bayntun
+             *
+             *Interface: void onProviderEnabled(String provider)
+             *           String provider -- The provider that is enabled
+             *
+             *Returns:
+             *         void
+             *
+             * Notes:
+             *  Occurs when the provider becomes enabled
+             **************************************************************************/
             @Override
             public void onProviderEnabled(String provider)
             {
                 Log.d(provider, "enabled");
             }
 
+
+            /***********************************************************************
+             * Function: onProviderDisabled
+             * Date March 4, 2015
+             * Revision:
+             *
+             * Designer: Jeff Bayntun
+             *
+             *Programmer: Jeff Bayntun
+             *
+             *Interface: void onProviderDisabled(String provider)
+             *           String provider -- The provider that is now enabled
+             *
+             *Returns:
+             *         void
+             *
+             * Notes:
+             *  Occurs when the provider becomes disabled
+             **************************************************************************/
             @Override
             public void onProviderDisabled(String provider)
             {

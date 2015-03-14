@@ -1,16 +1,33 @@
 package comteam_chimeragps_tracker.httpsgithub.bigbrother;
-/*
-        Date:       March 4, 2014
-        Activity:   AcquireHost
-        Designer:   Jeff Bayntun
-        Programmer:  Jeff Bayntun
 
-        Description: This Activity allows the user to input host information.
-        When the user submits this information, a connection is attempted.  If
-        the connection succeeds, the user proceeds to the Activity Tracking Central.
 
- */
-
+/**********************************************************************
+ **  SOURCE FILE:  AcquireHost.java -  Java file for the host page
+ **
+ **  PROGRAM:    Android GPS // Big Brother
+ **
+ **  FUNCTIONS:
+ **             boolean onOptionsItemSelected(MenuItem item)
+ **             boolean onCreateOptionsMenu(Menu menu)
+ **             void onCreate(Bundle savedInstanceState)
+ **             void submitConnection(View view)
+ **             boolean allFields()
+ **
+ **
+ **
+ **  DATE:      March 4, 2014
+ **
+ **
+ **  DESIGNER:    Jeff Bayntun
+ **
+ **
+ **  PROGRAMMER: Jeff Bayntun
+ **
+ **  NOTES:
+ ** This Activity allows the user to input host information.
+ ** When the user submits this information, a connection is attempted.  If
+ ** the connection succeeds, the user proceeds to the Activity Tracking Central.
+ *************************************************************************/
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -25,7 +42,8 @@ import android.widget.Toast;
 
 public class AcquireHost extends ActionBarActivity {
 
-    private final TextWatcher  mTextEditorWatcher = new TextWatcher() {
+    private final TextWatcher  mTextEditorWatcher = new TextWatcher()
+    {
 
         public void beforeTextChanged(CharSequence s, int start, int count, int after)
         {}
@@ -38,17 +56,25 @@ public class AcquireHost extends ActionBarActivity {
             allFields();
         }
     };
-    /*
-     * Programmer: Jeff Bayntun
+
+    /*****************************************************************************
+     * Function: onCreate
+     * Date March 4, 2015
+     * Revision:
+     *
      * Designer: Jeff Bayntun
      *
-     * Function: onCreate
+     *Programmer: Jeff Bayntun
      *
+     *Interface: void onCreate(Bundle savedInstanceState)
+     *              Bundle savedInstanceState -- state before last close
+     *Returns:
+     *         void
      *
      * Notes:
-     *  Creates the AcquireHost activity, pre-populating the last used host
+     * Creates the AcquireHost activity, pre-populating the last used host
      *  and port into the GUI
-     */
+     **************************************************************************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +108,24 @@ public class AcquireHost extends ActionBarActivity {
     }
 
 
+    /*****************************************************************************
+     * Function: onCreateOptionsMenu
+     * Date March 4, 2015
+     * Revision:
+     *
+     * Designer: Jeff Bayntun
+     *
+     *Programmer: Jeff Bayntun
+     *
+     *Interface: boolean onCreateOptionsMenu(Menu menu)
+     *              Menu menu -- Menu bar
+     *
+     * Returns:
+     *          bool -- inflate fail or success
+     *
+     * Notes:
+     *  Creates the options menu bar
+     **************************************************************************/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -89,6 +133,24 @@ public class AcquireHost extends ActionBarActivity {
         return true;
     }
 
+    /*****************************************************************************
+     * Function: onOptionsItemSelected
+     * Date March 4, 2015
+     * Revision:
+     *
+     * Designer: Jeff Bayntun
+     *
+     *Programmer: Jeff Bayntun
+     *
+     *Interface: boolean  onOptionsItemSelected(MenuItem item)
+     *              MenuItem item -- Item selected in the menu
+     *
+     * Returns:
+     *          bool -- inflate fail or success
+     *
+     * Notes:
+     *  onClick method for any of the menu bar items
+     **************************************************************************/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -126,17 +188,26 @@ public class AcquireHost extends ActionBarActivity {
         }
     }
 
-    /*
-     * Programmer: Jeff Bayntun, Julian Brandrick
+
+    /*****************************************************************************
+     * Function: submitConnection
+     * Date March 4, 2015
+     * Revision:
+     *
      * Designer: Jeff Bayntun
      *
-     * Function: submitConnection
+     *Programmer: Jeff Bayntun,  Julian Brandrick
      *
+     *Interface: void submitConnection(View view)
+     *              View view -- Calling view
+     *
+     * Returns:
+     *          bool -- inflate fail or success
      *
      * Notes:
-     *  Listener for button submit button.  Validates input, verifies host
+     * Listener for button submit button.  Validates input, verifies host
      *  is reachable, then opens Tracking Service Activity
-     */
+     **************************************************************************/
     public void submitConnection(View view)
     {
         ClientConnect clientNet;
@@ -174,16 +245,27 @@ public class AcquireHost extends ActionBarActivity {
         finish();
     }
 
-    /*
-     * Programmer: Jeff Bayntun, Julian Brandrick
+
+
+
+    /*****************************************************************************
+     * Function: allFields
+     * Date March 4, 2015
+     * Revision:
+     *
      * Designer: Jeff Bayntun
      *
-     * Function: allFields
+     *Programmer: Jeff Bayntun,  Julian Brandrick
      *
+     *Interface: void allFields()
+     *
+     * Returns:
+     *         boolean -- true if the fields are all set
+     *                    false if a field is empty
      *
      * Notes:
-     *  ensures all fields have been filled in, toggles color of submit button
-     */
+     * ensures all fields have been filled in, toggles color of submit button
+     **************************************************************************/
     boolean allFields()
     {
         Button submit = (Button) findViewById(R.id.submit);
