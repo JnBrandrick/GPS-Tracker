@@ -5,22 +5,61 @@
         <time>2015/03/13 17:24:50</time>
         <latitude>49.21520009</latitude>
         <longitude>-122.95533078</longitude>
-    </user>    <user>
+    </user>    
+    <user>
         <name>f9d2258d534ac28e</name>
         <ip>192.168.1.8</ip>
         <time>2015/03/13 19:21:08</time>
         <latitude>49.21520009</latitude>
         <longitude>-122.95533078</longitude>
-    </user>    <user>
+    </user>
+    <user>
+        <name>974521a887d8fa13</name>
+        <ip>/24.86.224.220</ip>
+        <time>2015/03/14 13:57:25</time>
+        <latitude>49.16319459</latitude>
+        <longitude>-123.18601003</longitude>
+    </user>
+    <user>
         <name>f9d2258d534ac28e</name>
-        <ip>192.168.1.8</ip>
-        <time>2015/03/13 19:21:14</time>
-        <latitude>49.21500055</latitude>
-        <longitude>-122.95543606</longitude>
-    </user>    <user>
+        <ip>/209.52.88.105</ip>
+        <time>2015/03/14 13:59:36</time>
+        <latitude>49.16337802</latitude>
+        <longitude>-123.18626501</longitude>
+    </user>
+    <user>
+        <name>974521a887d8fa13</name>
+        <ip>/24.86.224.220</ip>
+        <time>2015/03/14 13:57:31</time>
+        <latitude>49.16318259</latitude>
+        <longitude>-123.18639217</longitude>
+    </user>
+    <user>
         <name>f9d2258d534ac28e</name>
-        <ip>192.168.1.8</ip>
-        <time>2015/03/13 19:22:15</time>
-        <latitude>49.21500055</latitude>
-        <longitude>-122.95543606</longitude>
-    </user></users>
+        <ip>/209.52.88.105</ip>
+        <time>2015/03/14 13:59:41</time>
+        <latitude>49.16334833</latitude>
+        <longitude>-123.18602417</longitude>
+    </user>
+    <user>
+        <name>f9d2258d534ac28e</name>
+        <ip>/209.52.88.105</ip>
+        <time>2015/03/14 14:03:35</time>
+        <latitude>49.16334833</latitude>
+        <longitude>-123.18602417</longitude>
+    </user>
+    <user>
+        <name>f9d2258d534ac28e</name>
+        <ip>/209.52.88.105</ip>
+        <time>2015/03/14 14:03:44</time>
+        <latitude>49.1634175</latitude>
+        <longitude>-123.18633985</longitude>
+    </user>
+    <user>
+        <name>f9d2258d534ac28e</name>
+        <ip>/24.86.224.220</ip>
+        <time>2015/03/14 14:03:58</time>
+        <latitude>49.1634175</latitude>
+        <longitude>-123.18633985</longitude>
+    </user>
+</users>
