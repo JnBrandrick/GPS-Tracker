@@ -1,0 +1,44 @@
+=========================================
+|	GPS -- Manifest File		|
+=========================================
+
+This file is to list all files required for each component of the project
+
+===============
+    WEBSITE
+===============
+The following files are needed to run the website successfully:
+	- Website/index.html
+	- Website/.htaccess
+	- Website/.htpasswd
+	- Website/data.xml
+	- Website/.htaccess
+	- Website/pages/map.html
+	- Website/js/map-script.js
+	- Website/js/jquery-2.1.3.min.js
+	- Website/js/home-script.js
+	- Website/css/style.css
+	- Website/css/AlpacaScarlett.ttf
+	- Website/css/ClementePDai-Regular.ttf
+	- Website/css/FunSized.ttf
+	- Webiste/assets/favicon.png
+	- Webiste/assets/marker.png
+
+
+==============
+   SERVER
+==============
+The folowing are required to build and run the server:
+	- Server/Server.java
+
+
+==============
+   CLIENT
+==============
+The following are required to build and run the client:
+	-Client/Project
+	-Client/client.apk
+
+The project subfolder contains the entire android studio folder
+
+
