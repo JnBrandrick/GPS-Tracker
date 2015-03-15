@@ -30,6 +30,7 @@ package comteam_chimeragps_tracker.httpsgithub.bigbrother;
  *************************************************************************/
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -232,8 +233,12 @@ public class TrackingCentral extends ActionBarActivity
     public void showAll(View view)
     {
         // open in-app browser activity to show all users results
-        Intent myIntent = new Intent(this,ShowMap.class);
-        myIntent.putExtra("all", true);
-        startActivity(myIntent);
+      //  Intent myIntent = new Intent(this,ShowMap.class);
+      //  startActivity(myIntent);
+
+        String url = "http://" + PreferenceHandler.getPreference(this, PreferenceHandler.HOST_PREFERENCE);
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 }
