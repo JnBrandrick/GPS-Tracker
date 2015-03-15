@@ -67,8 +67,8 @@ public class TrackingService extends Service
     private android.location.LocationListener mListener;
     private LocationManager locationManager;
 
-    private final long INTERVAL = 15 * 60 * 1000; // every 15 minutes
-    private final float DISTANCE = 500; // every 500m
+    private final long INTERVAL = 3 * 60 * 1000; // atleast 3 min intervals
+    private final float DISTANCE = 500; // atleast 500m distance
 
     /*****************************************************************************
      * Function: onCreate

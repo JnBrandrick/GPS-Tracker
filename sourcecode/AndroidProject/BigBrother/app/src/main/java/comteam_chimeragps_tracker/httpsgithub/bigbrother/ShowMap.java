@@ -32,9 +32,12 @@ package comteam_chimeragps_tracker.httpsgithub.bigbrother;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.HttpAuthHandler;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -42,12 +45,8 @@ import android.webkit.WebViewClient;
 public class ShowMap extends ActionBarActivity {
 
     private WebView web = null;
-    private boolean all = false;
 
     private String ALL_PAGE;
-    private String MY_PAGE;
-    private final String MY_HISTORY = "View My History";
-    private final String ALL_HISTORY = "View All History";
 
     /*****************************************************************************
      * Function: onCreate
@@ -68,24 +67,19 @@ public class ShowMap extends ActionBarActivity {
      * was selected (boolean in intent)
      **************************************************************************/
     @Override
+    @JavascriptInterface
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_map);
 
         ALL_PAGE = "http://" + PreferenceHandler.getPreference(this, PreferenceHandler.HOST_PREFERENCE);
-        MY_PAGE = ALL_PAGE + "/" + "chimera.datacom.me";
-
-        // get bundle with info for correct webview
-        Intent intent = getIntent();
-        all = intent.getExtras().getBoolean("all");
-        String url = (all) ? ALL_PAGE: MY_PAGE;
-
+        Log.d("website ", ALL_PAGE);
 
         //open that webview
         web = (WebView) findViewById(R.id.webView);
         web.getSettings().setJavaScriptEnabled(true);
-        web.setWebViewClient(new MyBrowser());
-        open(url);
+        web.setWebViewClient(new MyWebViewClient ());
+        open(ALL_PAGE);
     }
 
 
@@ -195,37 +189,37 @@ public class ShowMap extends ActionBarActivity {
     public void open(String url) {
         web.getSettings().setLoadsImagesAutomatically(true);
         web.getSettings().setJavaScriptEnabled(true);
-        // web.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         web.loadUrl(url);
     }
 
-
-    private class MyBrowser extends WebViewClient
-    {
-
-        /*****************************************************************************
-         * Function: shouldOverrideUrlLoading
-         * Date March 4, 2015
-         * Revision:
-         *
-         * Designer: Jeff Bayntun
-         *
-         *Programmer: Jeff Bayntun
-         *
-         *Interface:  boolean shouldOverrideUrlLoading(WebView view, String url)
-         *             WebView view -- Webview to load a page
-         *             String url -- URL to laod in the view
-         *
-         * Returns:
-         *          boolean -- True or false on the loading
-         *
-         * Notes:
-         *  Opens the URL in the webview
-         **************************************************************************/
+        private class MyWebViewClient extends WebViewClient {
+            /*****************************************************************************
+             * Function: onReceivedHttpAuthRequest
+             * Date March 4, 2015
+             * Revision:
+             *
+             * Designer: Jeff Bayntun
+             *
+             *Programmer: Jeff Bayntun
+             *
+             *Interface:   void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm)
+             *             WebView view -- Webview to load a page
+             *             HttpAuthHandler handler -- authentication handler
+             *             String host -- string representing the host
+             *             String realm -- string representing the realm
+             *
+             * Returns:
+             *          void
+             *
+             * Notes:
+             *  handles the htaccess authentication for website, uses hardcoded values.
+             **************************************************************************/
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
+        public void onReceivedHttpAuthRequest(WebView view,
+                                              HttpAuthHandler handler, String host, String realm) {
+
+            handler.proceed("teamchimera", "datacomm");
+
         }
     }
 
